@@ -464,8 +464,8 @@ function showFloatText(board, text, x, y, color) {
 }
 
 function updateUI() {
-  document.getElementById('stat-score').innerText = score; 
-  document.getElementById('stat-best').innerText = bestScore;
+  document.querySelectorAll('.sync-stat-score').forEach(el => el.innerText = score);
+  document.querySelectorAll('.sync-stat-best').forEach(el => el.innerText = bestScore);
   
   let heartsHtml = '';
   for(let i = 1; i <= 3; i++) {
@@ -475,28 +475,32 @@ function updateUI() {
       heartsHtml += `<svg class="life-icon" width="22" height="22" viewBox="0 0 24 24" fill="rgba(0,0,0,0.2)" style="margin-left: 4px"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
     }
   }
-  document.getElementById('stat-lives').innerHTML = heartsHtml;
+  document.querySelectorAll('.sync-stat-lives').forEach(el => el.innerHTML = heartsHtml);
   
   let escapePercent = Math.min(100, (escapedBugs / 5) * 100);
-  const bar = document.getElementById('escape-bar');
-  if (bar) bar.style.width = escapePercent + '%';
-  const text = document.getElementById('escape-text');
-  if (text) text.innerText = `${escapedBugs} / 5`;
+  document.querySelectorAll('.sync-escape-bar').forEach(bar => bar.style.width = escapePercent + '%');
+  document.querySelectorAll('.sync-escape-text').forEach(t => t.innerText = `${escapedBugs} / 5`);
 }
 
 function updateComboUI() {
-  document.getElementById('stat-combo').innerText = combo;
-  const icon = document.getElementById('combo-icon');
-  const box = document.getElementById('combo-box');
+  document.querySelectorAll('.sync-stat-combo').forEach(el => el.innerText = combo);
+  const icons = document.querySelectorAll('.sync-combo-icon');
+  const boxes = document.querySelectorAll('.sync-combo-box');
   
   if(combo >= 3) {
-    icon.classList.remove('hidden');
-    icon.classList.add('combo-fire');
-    box.style.transform = 'scale(1.02)';
-    setTimeout(()=> box.style.transform = 'scale(1)', 150);
+    icons.forEach(icon => {
+      icon.classList.remove('hidden');
+      icon.classList.add('combo-fire');
+    });
+    boxes.forEach(box => {
+      box.style.transform = 'scale(1.02)';
+      setTimeout(()=> box.style.transform = 'scale(1)', 150);
+    });
   } else {
-    icon.classList.add('hidden');
-    icon.classList.remove('combo-fire');
+    icons.forEach(icon => {
+      icon.classList.add('hidden');
+      icon.classList.remove('combo-fire');
+    });
   }
 }
 
