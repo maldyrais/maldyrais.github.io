@@ -1,0 +1,2 @@
+[functions.trigger-site-rebuild]
+verify_jwt = false
