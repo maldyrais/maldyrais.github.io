@@ -1,0 +1,1436 @@
+/* ================================================================
+   HOME — SELECTED WORKS / SHOWCASE SLIDER
+   Replaces the old masonry marquee with a calm editorial carousel.
+   ================================================================ */
+.selected-works.showcase-section {
+  display: grid;
+  place-items: center;
+  min-height: 100svh;
+  padding: clamp(92px, 8vw, 118px) clamp(22px, 6vw, 90px) clamp(34px, 5vw, 56px);
+  background:
+    radial-gradient(circle at 79% 44%, rgba(57,118,232,.075), transparent 27%),
+    linear-gradient(180deg, #f7faff 0%, #f1f6fd 100%);
+}
+
+.showcase-shell {
+  width: min(1260px, 100%);
+  min-height: min(700px, calc(100svh - 150px));
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: clamp(24px, 3vw, 38px);
+}
+
+.showcase-kicker { align-self: start; }
+
+.showcase-stage {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, .82fr) minmax(480px, 1.18fr);
+  gap: clamp(48px, 7vw, 104px);
+  align-items: center;
+  animation: showcase-enter .46s ease both;
+}
+
+@keyframes showcase-enter {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.showcase-copy {
+  min-width: 0;
+  max-width: 540px;
+}
+
+.showcase-index {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--blue);
+  font: 700 .72rem/1 Manrope, sans-serif;
+  letter-spacing: .12em;
+}
+
+.showcase-copy h2 {
+  margin: 0;
+  max-width: 520px;
+  color: #171717;
+  font: 800 clamp(3.15rem, 5.25vw, 5.7rem)/.92 Manrope, "Noto Sans JP", sans-serif;
+  letter-spacing: -.062em;
+  text-wrap: balance;
+}
+
+.showcase-copy p {
+  max-width: 500px;
+  margin: clamp(20px, 2.2vw, 28px) 0 0;
+  color: #667080;
+  font-size: clamp(.98rem, 1.15vw, 1.1rem);
+  line-height: 1.72;
+}
+
+.showcase-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: clamp(26px, 3vw, 38px);
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgba(57,118,232,.30);
+  color: var(--blue);
+  font-weight: 800;
+  transition: border-color .2s ease, opacity .2s ease;
+}
+
+.showcase-cta span { transition: transform .2s ease; }
+.showcase-cta:hover,
+.showcase-cta:focus-visible { border-color: var(--blue); }
+.showcase-cta:hover span,
+.showcase-cta:focus-visible span { transform: translate(3px,-2px); }
+
+.showcase-collage {
+  position: relative;
+  width: 100%;
+  min-height: clamp(410px, 43vw, 560px);
+}
+
+.showcase-image {
+  position: absolute;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(23,23,23,.08);
+  border-radius: clamp(20px, 2vw, 28px);
+  background: #e9eef5;
+  box-shadow: 0 22px 60px rgba(30,52,84,.10);
+  transform-origin: center;
+}
+
+button.showcase-image {
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+.showcase-image.is-clickable {
+  transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease;
+}
+
+.showcase-image.is-clickable:hover,
+.showcase-image.is-clickable:focus-visible {
+  border-color: rgba(57,118,232,.38);
+  box-shadow: 0 28px 72px rgba(30,52,84,.16);
+}
+
+.showcase-image.is-clickable:focus-visible {
+  outline: 3px solid rgba(57,118,232,.24);
+  outline-offset: 4px;
+}
+
+.showcase-image-open {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 2;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,.92);
+  color: #171717;
+  box-shadow: 0 8px 24px rgba(18,32,52,.13);
+  opacity: 0;
+  transform: translateY(5px);
+  transition: opacity .2s ease, transform .2s ease;
+  pointer-events: none;
+}
+
+.showcase-image.is-clickable:hover .showcase-image-open,
+.showcase-image.is-clickable:focus-visible .showcase-image-open {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.showcase-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.showcase-image-1 {
+  z-index: 2;
+  left: 1%;
+  top: 27%;
+  width: 40%;
+  aspect-ratio: 4 / 5;
+  transform: rotate(-1.5deg);
+}
+
+.showcase-image-2 {
+  z-index: 4;
+  left: 31%;
+  top: 4%;
+  width: 39%;
+  aspect-ratio: 1 / 1;
+  transform: rotate(1deg);
+}
+
+.showcase-image-3 {
+  z-index: 3;
+  right: 0;
+  bottom: 4%;
+  width: 38%;
+  aspect-ratio: 4 / 5;
+  transform: rotate(1.8deg);
+}
+
+.showcase-collage.count-1 .showcase-image-1 {
+  left: 18%;
+  top: 5%;
+  width: 64%;
+  aspect-ratio: 4 / 3;
+  transform: none;
+}
+
+.showcase-collage.count-2 .showcase-image-1 {
+  left: 4%;
+  top: 17%;
+  width: 49%;
+  aspect-ratio: 4 / 5;
+}
+
+.showcase-collage.count-2 .showcase-image-2 {
+  left: auto;
+  right: 3%;
+  top: 5%;
+  width: 50%;
+  aspect-ratio: 4 / 5;
+}
+
+.showcase-empty-visual {
+  position: absolute;
+  inset: 12% 4%;
+  display: grid;
+  place-items: center;
+  border: 1px dashed #cdd8e9;
+  border-radius: 28px;
+  background: rgba(234,241,255,.45);
+  color: var(--blue);
+  font-weight: 700;
+}
+
+.showcase-controls {
+  display: grid;
+  grid-template-columns: auto minmax(180px, 420px);
+  align-items: center;
+  gap: clamp(24px, 4vw, 56px);
+}
+
+.showcase-arrows { display: flex; gap: 9px; }
+.showcase-arrows button {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #d9e0ea;
+  border-radius: 50%;
+  background: rgba(255,255,255,.72);
+  color: #171717;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: transform .2s ease, border-color .2s ease, color .2s ease;
+}
+.showcase-arrows button:hover,
+.showcase-arrows button:focus-visible {
+  border-color: var(--blue);
+  color: var(--blue);
+  transform: translateY(-1px);
+}
+
+.showcase-progress {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 6px;
+}
+
+.showcase-progress-segment {
+  position: relative;
+  height: 3px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 999px;
+  background: #d8dee7;
+  cursor: pointer;
+}
+
+.showcase-progress-segment::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  border-radius: inherit;
+  background: var(--blue);
+}
+
+.showcase-progress-segment.active::after {
+  animation: showcase-progress var(--slide-duration, 7s) linear forwards;
+}
+
+
+@keyframes showcase-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@media (max-width: 1024px) {
+  .showcase-stage {
+    grid-template-columns: minmax(0, .86fr) minmax(390px, 1.14fr);
+    gap: clamp(30px, 4vw, 54px);
+  }
+
+  .showcase-copy h2 { font-size: clamp(2.85rem, 5.9vw, 4.7rem); }
+  .showcase-collage { min-height: clamp(380px, 46vw, 500px); }
+}
+
+@media (max-width: 760px) {
+  .selected-works.showcase-section {
+    min-height: 100svh;
+    padding: 84px 18px 28px;
+    place-items: start stretch;
+  }
+
+  .showcase-shell {
+    width: 100%;
+    min-height: calc(100svh - 112px);
+    gap: 18px;
+  }
+
+  .showcase-stage {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: stretch;
+  }
+
+  .showcase-copy {
+    max-width: none;
+  }
+
+  .showcase-index { margin-bottom: 10px; }
+  .showcase-copy h2 {
+    max-width: 95%;
+    font-size: clamp(2.45rem, 11.5vw, 3.9rem);
+    line-height: .93;
+  }
+
+  .showcase-copy p {
+    max-width: 36rem;
+    margin-top: 14px;
+    font-size: .9rem;
+    line-height: 1.6;
+  }
+
+  .showcase-cta { margin-top: 17px; font-size: .9rem; }
+
+  .showcase-collage {
+    min-height: clamp(245px, 72vw, 325px);
+    margin-top: 2px;
+  }
+
+  .showcase-image {
+    border-radius: clamp(16px, 4vw, 22px);
+    box-shadow: 0 15px 42px rgba(30,52,84,.10);
+  }
+
+  .showcase-image-1 {
+    left: 1%;
+    top: 25%;
+    width: 42%;
+  }
+
+  .showcase-image-2 {
+    left: 30%;
+    top: 2%;
+    width: 42%;
+  }
+
+  .showcase-image-3 {
+    right: 1%;
+    bottom: 1%;
+    width: 40%;
+  }
+
+  .showcase-controls {
+    grid-template-columns: auto 1fr;
+    gap: 18px;
+    margin-top: auto;
+  }
+
+  .showcase-arrows button { width: 38px; height: 38px; }
+}
+
+@media (max-width: 420px) {
+  .selected-works.showcase-section { padding-inline: 15px; }
+  .showcase-shell { gap: 15px; }
+  .showcase-copy h2 { font-size: clamp(2.25rem, 11.8vw, 3.15rem); }
+  .showcase-copy p { font-size: .84rem; }
+  .showcase-collage { min-height: 230px; }
+  .showcase-controls { gap: 13px; }
+  .showcase-arrows { gap: 6px; }
+  .showcase-arrows button { width: 35px; height: 35px; }
+}
+
+@media (max-height: 720px) and (min-width: 761px) {
+  .selected-works.showcase-section {
+    padding-top: 82px;
+    padding-bottom: 24px;
+  }
+  .showcase-shell { min-height: calc(100svh - 106px); gap: 18px; }
+  .showcase-stage { gap: 38px; }
+  .showcase-copy h2 { font-size: clamp(2.7rem, 5vw, 4.4rem); }
+  .showcase-copy p { margin-top: 16px; line-height: 1.55; }
+  .showcase-cta { margin-top: 19px; }
+  .showcase-collage { min-height: 360px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .showcase-stage { animation: none; }
+  .showcase-progress-segment.active::after { animation: none; transform: scaleX(1); }
+}
+
+/* ================================================================
+   ADMIN — HOME SHOWCASE
+   ================================================================ */
+.admin-showcase-note {
+  display: grid;
+  gap: 5px;
+  margin: 0 0 22px;
+  padding: 16px 18px;
+  border: 1px solid #dfe5ef;
+  border-radius: 16px;
+  background: #f8fbff;
+}
+.admin-showcase-note strong { font-size: .86rem; }
+.admin-showcase-note span { color: var(--muted); font-size: .78rem; line-height: 1.55; }
+
+.admin-showcase-list {
+  display: grid;
+  gap: 10px;
+}
+
+.admin-showcase-row {
+  display: grid;
+  grid-template-columns: 52px minmax(0,1fr) auto;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 18px;
+  border: 1px solid #e2e6ed;
+  border-radius: 18px;
+  background: #fff;
+}
+
+.admin-showcase-order {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: var(--soft-blue);
+  color: var(--blue);
+  font: 800 .78rem/1 Manrope, sans-serif;
+}
+
+.admin-showcase-info { min-width: 0; }
+.admin-showcase-info h3 {
+  margin: 7px 0 4px;
+  font: 800 1.15rem/1.12 Manrope, "Noto Sans JP", sans-serif;
+  letter-spacing: -.025em;
+}
+.admin-showcase-info > small {
+  display: block;
+  max-width: 720px;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: .76rem;
+  line-height: 1.45;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-showcase-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.admin-showcase-controls > label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding-inline: 8px;
+  color: var(--muted);
+  font-size: .72rem;
+}
+.admin-showcase-controls input { width: 17px; height: 17px; accent-color: var(--blue); }
+
+.admin-showcase-move { display: flex; gap: 4px; }
+.admin-showcase-move button {
+  width: 34px;
+  height: 34px;
+  border: 1px solid #dfe3e9;
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+}
+.admin-showcase-move button:disabled { opacity: .35; cursor: default; }
+
+.showcase-editor .admin-work-form { gap: 20px; }
+.showcase-editor select {
+  width: 100%;
+  border: 1px solid #dfe3eb;
+  border-radius: 13px;
+  background: #fff;
+  padding: 13px 14px;
+  color: #171717;
+  outline: none;
+  font: 500 .94rem/1.4 Inter;
+}
+.showcase-editor select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(57,118,232,.12); }
+
+.admin-language-details {
+  border: 1px solid #e4e7ed;
+  border-radius: 16px;
+  background: #fafbfc;
+  overflow: hidden;
+}
+.admin-language-details summary {
+  padding: 14px 16px;
+  cursor: pointer;
+  font-size: .8rem;
+  font-weight: 700;
+}
+.admin-language-details[open] summary { border-bottom: 1px solid #e7e9ee; }
+.admin-language-details > .admin-form-grid { padding: 16px; }
+.admin-language-details.compact { background: #fff; }
+
+.admin-showcase-image-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 10px;
+}
+
+.admin-showcase-image-item {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #e2e6ec;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.admin-showcase-image-preview {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #eef1f5;
+}
+.admin-showcase-image-preview img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.admin-showcase-image-preview > span {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  min-width: 25px;
+  height: 25px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(23,23,23,.82);
+  color: #fff;
+  font-size: .68rem;
+  font-weight: 800;
+}
+
+.admin-showcase-image-meta {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+  padding: 10px 11px 4px;
+}
+.admin-showcase-image-meta strong,
+.admin-showcase-image-meta small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.admin-showcase-image-meta strong { font-size: .75rem; }
+.admin-showcase-image-meta small { color: var(--muted); font-size: .67rem; }
+
+.admin-showcase-image-item .admin-media-item-actions { padding: 8px 10px 10px; }
+
+.admin-showcase-add-grid {
+  display: grid;
+  grid-template-columns: minmax(0,1.25fr) minmax(180px,.75fr);
+  gap: 12px;
+  align-items: stretch;
+}
+
+.admin-showcase-work-picker {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) auto;
+  gap: 10px;
+  align-items: end;
+}
+.admin-showcase-work-picker label { min-width: 0; }
+.admin-showcase-work-picker .admin-button { min-height: 44px; }
+
+.showcase-upload-add { min-height: 76px; display: grid; }
+.showcase-upload-add > span { height: 100%; display: grid; place-items: center; text-align: center; }
+
+.admin-showcase-cta-box {
+  display: grid;
+  gap: 16px;
+  padding: 18px;
+  border: 1px solid #e2e6ec;
+  border-radius: 18px;
+  background: #fafbfc;
+}
+
+@media (max-width: 980px) {
+  .admin-showcase-row {
+    grid-template-columns: 46px minmax(0,1fr);
+  }
+  .admin-showcase-controls {
+    grid-column: 1 / -1;
+    justify-content: flex-end;
+    padding-top: 10px;
+    border-top: 1px solid #eef0f4;
+  }
+}
+
+@media (max-width: 700px) {
+  .showcase-admin-stats { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .admin-showcase-row { gap: 12px; padding: 14px; }
+  .admin-showcase-order { width: 40px; height: 40px; }
+  .admin-showcase-controls { flex-wrap: wrap; justify-content: flex-start; }
+  .admin-showcase-image-grid { grid-template-columns: 1fr; }
+  .admin-showcase-image-preview { aspect-ratio: 16 / 9; }
+  .admin-showcase-add-grid { grid-template-columns: 1fr; }
+  .admin-showcase-work-picker { grid-template-columns: 1fr; }
+  .admin-showcase-work-picker .admin-button { width: 100%; }
+}
+
+/* ================================================================
+   MORE ABOUT ME — MOBILE COLLISION FIX
+   Mobile keeps the cards clean: the 01/02/03 + Japanese mark badges
+   are hidden so they no longer collide with the title/copy.
+   Desktop and tablet landscape remain unchanged.
+   ================================================================ */
+@media (max-width: 760px) {
+  .more-card-top {
+    display: none;
+  }
+
+  .more-card-copy,
+  .more-card-nihongo .more-card-copy,
+  .more-card-works .more-card-copy {
+    left: 16px;
+    right: auto;
+    bottom: 14px;
+    width: min(62%, 360px);
+  }
+
+  .card-body strong,
+  .more-card-nihongo .card-body strong,
+  .more-card-works .card-body strong {
+    font-size: clamp(1.05rem, 4.7vw, 1.4rem);
+    line-height: 1.02;
+  }
+
+  .card-subtitle {
+    margin-top: 5px;
+    font-size: clamp(.67rem, 2.7vw, .8rem);
+    line-height: 1.35;
+    -webkit-line-clamp: 2;
+  }
+
+  .card-cta {
+    margin-top: 7px;
+  }
+
+  .doodle-about-copy,
+  .doodle-nihongo-copy,
+  .doodle-works-copy {
+    opacity: .55;
+  }
+}
+
+@media (max-width: 470px) {
+  .more-card-copy,
+  .more-card-nihongo .more-card-copy,
+  .more-card-works .more-card-copy {
+    width: 58%;
+  }
+
+  .card-subtitle {
+    -webkit-line-clamp: 1;
+  }
+}
+
+
+/* ================================================================
+   HOME — MORE ABOUT / MATANE-INSPIRED DIRECTORY
+   A quiet editorial section: large type, whitespace, thin rules,
+   and one preview visual instead of three competing cards.
+   ================================================================ */
+.more-about.more-about-simple {
+  justify-content: center;
+  padding-top: clamp(96px, 10vh, 136px);
+  padding-bottom: clamp(44px, 6vh, 72px);
+  background:
+    radial-gradient(circle at 82% 34%, rgba(57,118,232,.055), transparent 24%),
+    #fbfcfa;
+}
+
+.more-simple-shell {
+  width: min(1220px, 100%);
+  margin: 0 auto;
+}
+
+.more-simple-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: clamp(28px, 6vw, 90px);
+  padding-bottom: clamp(30px, 4.2vw, 54px);
+}
+
+.more-simple-header h2 {
+  margin: 10px 0 0;
+  max-width: none;
+  font: 800 clamp(4rem, 7.5vw, 8rem)/.88 Manrope, "Noto Sans JP", sans-serif;
+  letter-spacing: -.065em;
+  color: #171717;
+}
+
+.more-simple-jp {
+  flex: 0 0 auto;
+  margin: 0 2% 2px 0;
+  color: rgba(57,118,232,.14);
+  font: 700 clamp(3rem, 6.8vw, 7.5rem)/.9 "Noto Sans JP", sans-serif;
+  letter-spacing: -.08em;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.more-simple-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, .65fr);
+  gap: clamp(54px, 8vw, 120px);
+  align-items: stretch;
+  border-top: 1px solid var(--line);
+}
+
+.more-directory {
+  min-width: 0;
+}
+
+.more-directory-row {
+  width: 100%;
+  min-height: clamp(116px, 13vh, 148px);
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr) 56px 48px;
+  align-items: center;
+  gap: clamp(12px, 1.6vw, 22px);
+  padding: clamp(20px, 2vw, 28px) 2px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: #171717;
+  text-align: left;
+  cursor: pointer;
+  transition: color .24s ease, padding-left .28s ease;
+}
+
+.more-directory-row:hover,
+.more-directory-row:focus-visible,
+.more-directory-row.is-active {
+  color: var(--blue);
+}
+
+.more-directory-row:hover,
+.more-directory-row:focus-visible {
+  padding-left: 10px;
+}
+
+.more-directory-row:focus-visible {
+  outline: 2px solid rgba(57,118,232,.28);
+  outline-offset: 5px;
+  border-radius: 8px;
+}
+
+.more-directory-index {
+  align-self: start;
+  padding-top: 8px;
+  color: #9aa3af;
+  font: 700 .72rem/1 Manrope, sans-serif;
+  letter-spacing: .08em;
+  transition: color .24s ease;
+}
+
+.more-directory-row:hover .more-directory-index,
+.more-directory-row:focus-visible .more-directory-index,
+.more-directory-row.is-active .more-directory-index {
+  color: var(--blue);
+}
+
+.more-directory-copy {
+  min-width: 0;
+  display: grid;
+  gap: 7px;
+}
+
+.more-directory-copy strong {
+  font: 800 clamp(1.65rem, 2.45vw, 2.65rem)/.98 Manrope, "Noto Sans JP", sans-serif;
+  letter-spacing: -.045em;
+  color: currentColor;
+}
+
+.more-directory-copy small {
+  max-width: 620px;
+  color: #7a838f;
+  font-size: clamp(.82rem, 1vw, .98rem);
+  line-height: 1.55;
+}
+
+.more-directory-mark {
+  justify-self: center;
+  color: rgba(57,118,232,.22);
+  font: 700 clamp(1.45rem, 2vw, 2rem)/1 "Noto Sans JP", sans-serif;
+  transition: color .24s ease, transform .24s ease;
+}
+
+.more-directory-row:hover .more-directory-mark,
+.more-directory-row:focus-visible .more-directory-mark,
+.more-directory-row.is-active .more-directory-mark {
+  color: rgba(57,118,232,.72);
+  transform: translateY(-2px);
+}
+
+.more-directory-arrow {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  justify-self: end;
+  border: 1px solid #dfe4ea;
+  border-radius: 50%;
+  color: #687381;
+  font-size: 1.08rem;
+  transition:
+    transform .24s ease,
+    color .24s ease,
+    border-color .24s ease,
+    background-color .24s ease;
+}
+
+.more-directory-row:hover .more-directory-arrow,
+.more-directory-row:focus-visible .more-directory-arrow,
+.more-directory-row.is-active .more-directory-arrow {
+  color: #fff;
+  border-color: var(--blue);
+  background: var(--blue);
+  transform: translate(3px, -3px);
+}
+
+.more-simple-preview {
+  position: relative;
+  min-height: 100%;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+}
+
+.more-preview-orbit {
+  position: absolute;
+  z-index: 0;
+  width: min(30vw, 390px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #edf4ff;
+}
+
+.more-preview-orbit::after {
+  content: '';
+  position: absolute;
+  inset: 12%;
+  border: 1px solid rgba(57,118,232,.12);
+  border-radius: inherit;
+}
+
+.more-preview-mark {
+  position: absolute;
+  z-index: 1;
+  top: 14%;
+  right: 8%;
+  color: rgba(57,118,232,.15);
+  font: 700 clamp(4rem, 7vw, 7rem)/1 "Noto Sans JP", sans-serif;
+  user-select: none;
+}
+
+.more-preview-image {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: min(31vw, 410px);
+  max-height: 390px;
+  object-fit: contain;
+  filter: drop-shadow(0 24px 38px rgba(28, 65, 114, .10));
+  animation: morePreviewIn .34s cubic-bezier(.2,.82,.2,1) both;
+}
+
+.more-preview-image-about {
+  margin-top: 7%;
+}
+
+.more-preview-image-nihongo {
+  width: min(29vw, 385px);
+}
+
+.more-preview-image-works {
+  width: min(29vw, 390px);
+}
+
+@keyframes morePreviewIn {
+  from { opacity: 0; transform: translateY(12px) scale(.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 900px), (orientation: portrait) and (max-width: 1100px) {
+  .more-about.more-about-simple {
+    justify-content: center;
+    padding-top: clamp(82px, 9svh, 104px);
+    padding-bottom: clamp(28px, 4svh, 46px);
+  }
+
+  .more-simple-header {
+    align-items: flex-start;
+    padding-bottom: clamp(22px, 4vw, 34px);
+  }
+
+  .more-simple-header h2 {
+    font-size: clamp(3.15rem, 10vw, 5.8rem);
+    line-height: .9;
+  }
+
+  .more-simple-jp {
+    font-size: clamp(2.3rem, 8vw, 4.8rem);
+    margin-top: 7px;
+    margin-right: 0;
+  }
+
+  .more-simple-layout {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .more-simple-preview {
+    display: none;
+  }
+
+  /* The active row only drives the desktop preview. On touch layouts,
+     keep every row visually neutral and immediately tappable. */
+  .more-directory-row.is-active {
+    color: #171717;
+  }
+
+  .more-directory-row.is-active .more-directory-index {
+    color: #9aa3af;
+  }
+
+  .more-directory-row.is-active .more-directory-mark {
+    color: rgba(57,118,232,.22);
+    transform: none;
+  }
+
+  .more-directory-row.is-active .more-directory-arrow {
+    color: #687381;
+    border-color: #dfe4ea;
+    background: transparent;
+    transform: none;
+  }
+
+  .more-directory-row {
+    min-height: 112px;
+    grid-template-columns: 44px minmax(0, 1fr) 34px 40px;
+    gap: 10px;
+    padding: 18px 0;
+  }
+
+  .more-directory-row:hover,
+  .more-directory-row:focus-visible {
+    padding-left: 0;
+  }
+
+  .more-directory-copy strong {
+    font-size: clamp(1.45rem, 5vw, 2.15rem);
+  }
+
+  .more-directory-copy small {
+    max-width: 520px;
+    font-size: clamp(.76rem, 2.2vw, .9rem);
+    line-height: 1.45;
+  }
+
+  .more-directory-mark {
+    font-size: clamp(1.15rem, 3.6vw, 1.55rem);
+  }
+
+  .more-directory-arrow {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+@media (max-width: 560px) {
+  .more-about.more-about-simple {
+    padding-inline: 18px;
+  }
+
+  .more-simple-header {
+    gap: 14px;
+  }
+
+  .more-simple-header h2 {
+    font-size: clamp(2.65rem, 12vw, 4rem);
+  }
+
+  .more-simple-jp {
+    display: none;
+  }
+
+  .more-directory-row {
+    min-height: 104px;
+    grid-template-columns: 32px minmax(0, 1fr) 34px;
+    gap: 10px;
+    padding: 16px 0;
+  }
+
+  .more-directory-index {
+    padding-top: 5px;
+    font-size: .62rem;
+  }
+
+  .more-directory-mark {
+    display: none;
+  }
+
+  .more-directory-copy {
+    gap: 5px;
+  }
+
+  .more-directory-copy strong {
+    font-size: clamp(1.28rem, 6vw, 1.75rem);
+  }
+
+  .more-directory-copy small {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    font-size: .76rem;
+  }
+
+  .more-directory-arrow {
+    width: 34px;
+    height: 34px;
+    font-size: .92rem;
+  }
+}
+
+@media (max-height: 700px) and (min-width: 761px) {
+  .more-about.more-about-simple {
+    padding-top: 78px;
+    padding-bottom: 28px;
+  }
+
+  .more-simple-header {
+    padding-bottom: 22px;
+  }
+
+  .more-simple-header h2 {
+    font-size: clamp(3.5rem, 6.2vw, 5.4rem);
+  }
+
+  .more-directory-row {
+    min-height: 96px;
+    padding-block: 14px;
+  }
+
+  .more-preview-image {
+    max-height: 300px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .more-preview-image,
+  .more-directory-row,
+  .more-directory-mark,
+  .more-directory-arrow {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ================================================================
+   MORE ABOUT — TOUCH TWO-TAP PREVIEW
+   First tap reveals artwork below the selected row. Second tap on the
+   same row follows the link. Desktop hover behaviour stays unchanged.
+   ================================================================ */
+.more-directory-entry {
+  min-width: 0;
+}
+
+.more-touch-preview {
+  display: none;
+}
+
+.more-about-simple.is-touch .more-directory-row.is-active {
+  color: var(--blue);
+}
+
+.more-about-simple.is-touch .more-directory-row.is-active .more-directory-index {
+  color: var(--blue);
+}
+
+.more-about-simple.is-touch .more-directory-row.is-active .more-directory-mark {
+  color: rgba(57,118,232,.72);
+}
+
+.more-about-simple.is-touch .more-directory-row.is-active .more-directory-arrow {
+  color: #fff;
+  border-color: var(--blue);
+  background: var(--blue);
+  transform: translate(2px, -2px);
+}
+
+@media (hover: none), (pointer: coarse) {
+  .more-about-simple.is-touch .more-touch-preview {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    min-height: clamp(150px, 23svh, 230px);
+    margin: 0;
+    padding: clamp(10px, 2.5vw, 18px) clamp(6px, 2vw, 12px) clamp(18px, 3vw, 26px);
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+    animation: moreTouchPreviewIn .32s cubic-bezier(.2,.82,.2,1) both;
+  }
+
+  .more-about-simple.is-touch .more-directory-entry:has(.more-touch-preview) .more-directory-row {
+    border-bottom-color: transparent;
+  }
+
+  .more-touch-preview-art {
+    position: relative;
+    min-width: 0;
+    height: clamp(132px, 20svh, 205px);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+
+  .more-touch-preview-orbit {
+    position: absolute;
+    width: min(56vw, 225px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #edf4ff;
+  }
+
+  .more-touch-preview-orbit::after {
+    content: '';
+    position: absolute;
+    inset: 13%;
+    border: 1px solid rgba(57,118,232,.12);
+    border-radius: inherit;
+  }
+
+  .more-touch-preview-mark {
+    position: absolute;
+    z-index: 1;
+    top: 8%;
+    right: 10%;
+    color: rgba(57,118,232,.14);
+    font: 700 clamp(3rem, 14vw, 5rem)/1 "Noto Sans JP", sans-serif;
+  }
+
+  .more-touch-preview-image {
+    position: relative;
+    z-index: 2;
+    display: block;
+    width: min(62vw, 250px);
+    max-height: clamp(126px, 19svh, 195px);
+    object-fit: contain;
+    filter: drop-shadow(0 18px 26px rgba(28,65,114,.10));
+  }
+
+  .more-touch-preview-image-about {
+    margin-top: 4%;
+  }
+
+  .more-touch-preview-image-nihongo,
+  .more-touch-preview-image-works {
+    width: min(58vw, 238px);
+  }
+
+  .more-touch-preview-cue {
+    align-self: end;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    margin: 0 2px 2px 10px;
+    border: 1px solid #dfe4ea;
+    border-radius: 50%;
+    color: var(--blue);
+    font-size: .95rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .more-about-simple.is-touch .more-touch-preview {
+    min-height: 142px;
+    padding-inline: 0;
+  }
+
+  .more-touch-preview-art {
+    height: 138px;
+  }
+
+  .more-touch-preview-image {
+    width: min(61vw, 220px);
+    max-height: 134px;
+  }
+
+  .more-touch-preview-image-nihongo,
+  .more-touch-preview-image-works {
+    width: min(57vw, 208px);
+  }
+
+  .more-touch-preview-orbit {
+    width: min(54vw, 205px);
+  }
+}
+
+@keyframes moreTouchPreviewIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .more-touch-preview {
+    animation: none !important;
+  }
+}
+
+/* ================================================================
+   WORK MODAL — SMART MEDIA RATIO FIX
+   Normal photos always fit completely inside the preview.
+   Only intrinsically extreme media scroll:
+   - panorama: handled by .media-panorama
+   - very tall artwork/screenshots: handled by .media-tall
+
+   WorkModal no longer assigns desktop-x / desktop-y to standard media,
+   so a normal 2:3 portrait photo cannot be mistaken for a tall document.
+   ================================================================ */
+
+.work-modal .modal-image-scroll {
+  background: transparent;
+}
+
+/* Standard media: always show the full image. */
+.work-modal .modal-image-scroll.media-standard {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.work-modal .modal-image-scroll.media-standard > img:not(.modal-image-backdrop) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+/* Let the blurred copy fill any letterbox space instead of a white strip. */
+.work-modal .modal-image-backdrop {
+  opacity: .38;
+  filter: blur(28px) saturate(.9);
+}
+
+/* Extreme vertical media remains intentionally scrollable. */
+.work-modal .modal-image-scroll.media-tall {
+  display: grid;
+  place-items: start center;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.work-modal .modal-image-scroll.media-tall > img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  max-height: none;
+  object-fit: contain;
+  object-position: top center;
+}
+
+/* Extreme horizontal media remains intentionally scrollable. */
+.work-modal .modal-image-scroll.media-panorama {
+  display: grid;
+  place-items: center start;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.work-modal .modal-image-scroll.media-panorama > img {
+  width: auto;
+  height: 100%;
+  max-width: none;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: left center;
+}
+
+
+/* ================================================================
+   WORK MODAL — FIT / DETAIL PREVIEW V2
+   Deterministic behavior:
+   - every slide opens in FIT mode (full image, no crop, no scroll)
+   - Detail is an explicit user choice and scrolls only on the needed axis
+   - blurred backdrop remains visible in letterbox space
+   ================================================================ */
+
+.work-modal .modal-image-scroll.preview-fit,
+.work-modal .modal-image-scroll.preview-detail {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background: transparent !important;
+}
+
+.work-modal .modal-image-scroll.preview-fit {
+  display: grid !important;
+  place-items: center !important;
+  overflow: hidden !important;
+  cursor: default !important;
+}
+
+.work-modal .modal-image-scroll.preview-fit > img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+}
+
+.work-modal .modal-image-scroll.preview-detail.detail-y {
+  display: grid !important;
+  place-items: start center !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  cursor: ns-resize;
+}
+
+.work-modal .modal-image-scroll.preview-detail.detail-y > img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  min-width: 0 !important;
+  min-height: 100% !important;
+  max-width: 100% !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: top center !important;
+}
+
+.work-modal .modal-image-scroll.preview-detail.detail-x {
+  display: grid !important;
+  place-items: center start !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  cursor: ew-resize;
+}
+
+.work-modal .modal-image-scroll.preview-detail.detail-x > img {
+  display: block !important;
+  width: auto !important;
+  height: 100% !important;
+  min-width: 100% !important;
+  min-height: 0 !important;
+  max-width: none !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  object-position: left center !important;
+}
+
+/* Make the image itself visible over the blurred duplicate without a milky wash. */
+.work-modal .modal-image-backdrop {
+  opacity: .32 !important;
+}
+
+.work-preview-mode-button {
+  position: absolute;
+  z-index: 7;
+  left: 18px;
+  bottom: 72px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  border-radius: 999px;
+  padding: 9px 13px;
+  background: rgba(255,255,255,.92);
+  color: #171717;
+  font-size: .76rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 7px 24px rgba(0,0,0,.1);
+  backdrop-filter: blur(12px);
+  transition: transform .2s ease, background-color .2s ease;
+}
+
+.work-preview-mode-button:hover {
+  transform: translateY(-2px);
+}
+
+.work-preview-mode-button[aria-pressed="true"] {
+  background: #171717;
+  color: #fff;
+}
+
+@media (max-width: 850px) {
+  .work-preview-mode-button {
+    left: 12px;
+    bottom: 58px;
+    padding: 8px 11px;
+    font-size: .7rem;
+  }
+}
+

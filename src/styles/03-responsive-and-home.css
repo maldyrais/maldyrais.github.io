@@ -1,0 +1,1740 @@
+/* ================================================================
+   RESPONSIVE NAV + ADMIN DRAWER FIX
+   Appended after the existing stylesheet so these rules win.
+   ================================================================ */
+html.nav-open,
+html.admin-menu-open { overflow: hidden; }
+
+/* ---------- Public mobile navigation ---------- */
+.nav-menu-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 999px;
+  padding: 0;
+  background: #171717;
+  cursor: pointer;
+  place-items: center;
+  align-content: center;
+  gap: 4px;
+  position: relative;
+  z-index: 45;
+}
+
+.nav-menu-toggle span {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  border-radius: 999px;
+  background: #fff;
+  transition: transform .25s ease, opacity .2s ease;
+}
+
+/* Di atas hero biru, tombol mobile ikut menjadi glass/transparent. */
+.navbar.is-hero-top > .nav-menu-toggle {
+  background: rgba(255, 255, 255, .16);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .18);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.nav-menu-toggle.is-open span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+.nav-menu-toggle.is-open span:nth-child(2) { opacity: 0; }
+.nav-menu-toggle.is-open span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+
+.mobile-nav-shell {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  visibility: hidden;
+  transition: visibility 0s linear .35s;
+}
+
+.mobile-nav-shell.is-open {
+  pointer-events: auto;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.mobile-nav-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: rgba(15, 18, 24, .38);
+  backdrop-filter: blur(5px);
+  opacity: 0;
+  cursor: default;
+  transition: opacity .28s ease;
+}
+
+.mobile-nav-shell.is-open .mobile-nav-backdrop { opacity: 1; }
+
+.mobile-nav-drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(390px, 88vw);
+  height: 100dvh;
+  padding: 20px 22px 28px;
+  background: #fcfcfa;
+  border-left: 1px solid var(--line);
+  box-shadow: -26px 0 70px rgba(15, 20, 30, .13);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(105%);
+  transition: transform .34s cubic-bezier(.2, .8, .2, 1);
+  overflow-y: auto;
+}
+
+.mobile-nav-shell.is-open .mobile-nav-drawer { transform: translateX(0); }
+
+.mobile-nav-header {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.mobile-nav-close {
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+.mobile-nav-links {
+  display: grid;
+  margin: auto 0;
+  padding: 42px 0;
+}
+
+.mobile-nav-links a {
+  padding: 15px 0;
+  border-bottom: 1px solid var(--line);
+  font: 800 clamp(2.2rem, 11vw, 4rem)/1 Manrope, "Noto Sans JP", sans-serif;
+  letter-spacing: -.055em;
+  transition: color .2s ease, padding-left .2s ease;
+}
+
+.mobile-nav-links a:first-child { border-top: 1px solid var(--line); }
+.mobile-nav-links a:hover,
+.mobile-nav-links a:focus-visible { color: var(--blue); padding-left: 8px; }
+
+.mobile-nav-language {
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.mobile-nav-language > small {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.mobile-nav-language .language-switch { margin-left: 0; gap: 10px; }
+.mobile-nav-language .language-switch button { padding: 8px 2px; }
+
+/* ---------- Admin mobile/tablet navigation ---------- */
+.admin-mobile-bar,
+.admin-sidebar-backdrop { display: none; }
+
+.admin-menu-toggle {
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 12px;
+  background: #171717;
+  padding: 0;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 4px;
+  flex: 0 0 auto;
+}
+
+.admin-menu-toggle span {
+  display: block;
+  width: 17px;
+  height: 1.5px;
+  border-radius: 999px;
+  background: #fff;
+  transition: transform .25s ease, opacity .2s ease;
+}
+
+.admin-menu-toggle.is-open span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+.admin-menu-toggle.is-open span:nth-child(2) { opacity: 0; }
+.admin-menu-toggle.is-open span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+
+@media (max-width: 850px) {
+  .navbar { height: 64px; }
+  .nav-links { display: none; }
+  .nav-menu-toggle { display: grid; }
+}
+
+@media (max-width: 980px) {
+  .admin-dashboard {
+    display: block;
+    min-height: 100svh;
+    background: #f5f7fb;
+  }
+
+  .admin-mobile-bar {
+    position: sticky;
+    top: 0;
+    z-index: 180;
+    min-height: 68px;
+    padding: 11px clamp(16px, 3vw, 24px);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(245, 247, 251, .94);
+    border-bottom: 1px solid #e3e6ec;
+    backdrop-filter: blur(16px);
+  }
+
+  .admin-mobile-title {
+    min-width: 0;
+    display: grid;
+    gap: 1px;
+  }
+
+  .admin-mobile-title small {
+    color: var(--blue);
+    font-size: .56rem;
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: .11em;
+  }
+
+  .admin-mobile-title strong {
+    font: 800 1rem/1.1 Manrope, sans-serif;
+  }
+
+  .admin-mobile-site-link {
+    margin-left: auto;
+    color: var(--muted);
+    font-size: .74rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .admin-sidebar {
+    display: flex !important;
+    position: fixed !important;
+    inset: 0 auto 0 0;
+    z-index: 200;
+    width: min(320px, 86vw);
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    padding: 28px 22px 24px;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: space-between;
+    gap: 28px;
+    overflow-y: auto;
+    transform: translateX(-105%);
+    transition: transform .34s cubic-bezier(.2, .8, .2, 1);
+    box-shadow: 22px 0 70px rgba(0, 0, 0, .18);
+  }
+
+  .admin-sidebar.is-open { transform: translateX(0); }
+
+  .admin-sidebar > div:first-child {
+    display: block !important;
+    min-width: 0;
+  }
+
+  .admin-sidebar h1 {
+    display: block !important;
+    margin: 15px 0 36px;
+  }
+
+  .admin-sidebar nav {
+    display: grid !important;
+    width: 100%;
+    margin-left: 0 !important;
+    gap: 7px;
+    overflow: visible !important;
+  }
+
+  .admin-sidebar nav button {
+    width: 100%;
+    padding: 12px 13px;
+    white-space: normal;
+  }
+
+  .admin-sidebar-bottom {
+    display: grid !important;
+    grid-column: auto !important;
+    justify-content: stretch !important;
+    gap: 12px;
+  }
+
+  .admin-sidebar-bottom small { display: block !important; }
+
+  .admin-sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 190;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    padding: 0;
+    background: rgba(15, 18, 24, .42);
+    backdrop-filter: blur(5px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .28s ease;
+  }
+
+  .admin-sidebar-backdrop.is-open {
+    display: block;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .admin-main {
+    padding: clamp(26px, 4vw, 44px) clamp(18px, 4vw, 38px) 60px;
+  }
+
+  .admin-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .admin-toolbar {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .admin-toolbar > input {
+    flex: 1 1 280px;
+    max-width: none;
+  }
+
+  .admin-work-row {
+    grid-template-columns: 72px minmax(0, 1fr);
+  }
+
+  .admin-work-thumb { width: 72px; }
+
+  .admin-work-controls {
+    grid-column: 1 / -1;
+    justify-content: flex-end;
+    border-top: 1px solid #eef0f4;
+    padding-top: 10px;
+  }
+}
+
+@media (max-width: 650px) {
+  .admin-mobile-bar { min-height: 62px; padding-inline: 14px; }
+  .admin-mobile-site-link { font-size: 0; }
+  .admin-mobile-site-link::after { content: '↗'; font-size: 1rem; color: var(--blue); }
+
+  .admin-main { padding: 22px 14px 48px; }
+
+  .admin-topbar {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .admin-topbar .admin-button { width: 100%; }
+
+  .admin-topbar h2 {
+    font-size: clamp(2.7rem, 14vw, 4rem);
+  }
+
+  .admin-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 26px;
+  }
+
+  .admin-stats article { padding: 14px; }
+  .admin-stats strong { font-size: 1.65rem; }
+
+  .admin-toolbar { flex-direction: column; }
+  .admin-toolbar > input { width: 100%; flex-basis: auto; }
+
+  .admin-filter-buttons {
+    width: 100%;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+
+  .admin-filter-buttons::-webkit-scrollbar { display: none; }
+
+  .admin-work-row {
+    grid-template-columns: 58px minmax(0, 1fr);
+    gap: 11px;
+    padding: 10px;
+  }
+
+  .admin-work-thumb { width: 58px; }
+
+  .admin-work-info h3 {
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .admin-work-controls {
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .admin-editor {
+    width: 100vw;
+    padding-inline: 16px;
+  }
+
+  .admin-form-grid.two,
+  .admin-upload-grid { grid-template-columns: 1fr; }
+
+  .admin-related-selector header { align-items: flex-start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-nav-drawer,
+  .mobile-nav-backdrop,
+  .admin-sidebar,
+  .admin-sidebar-backdrop { transition: none !important; }
+}
+
+/* ================================================================
+   RESPONSIVE HOME HERO
+   The artwork has one shared coordinate system. Portrait layouts use
+   a taller artboard; landscape layouts keep the reference proportions.
+   Supporting copy stays in normal flow so short screens can scroll.
+   ================================================================ */
+.hero.hero-layered {
+  --hero-nav-h: 72px;
+  --hero-copy-h: 160px;
+  --hero-sky-top: #2ca9ef;
+  --hero-sky-mid: #50bef3;
+  --hero-sky-bottom: #a9e5fa;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-height: 100svh;
+  padding: var(--hero-nav-h) 0 0;
+  background:
+    radial-gradient(circle at 50% 27%, rgba(255,255,255,.12), transparent 31%),
+    linear-gradient(
+      180deg,
+      var(--hero-sky-top) 0%,
+      var(--hero-sky-mid) 60%,
+      var(--hero-sky-bottom) 88%,
+      #eefaff 97%,
+      #fff 100%
+    );
+  color: #fff;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero-layered-stage {
+  position: relative;
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+}
+
+.hero-layered-art {
+  position: relative;
+  flex: 0 0 auto;
+  /* Fit the whole scene on shorter laptops, with a readable lower limit.
+     2.133333 is the artboard's 16 / 7.5 ratio. */
+  width: min(100%, 1600px, max(720px, calc((100svh - var(--hero-nav-h) - var(--hero-copy-h)) * 2.133333)));
+  aspect-ratio: 16 / 7.5;
+  margin-inline: auto;
+}
+
+/* Keep the cqw coordinate system in its own rear layer.
+   Notes remain direct children of .hero-layered-art so they can stack
+   above the main cloud without putting the character above it too. */
+.hero-layered-scene {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  container-type: inline-size;
+  isolation: isolate;
+}
+
+.hero-layer {
+  position: absolute;
+  display: block;
+  max-width: none;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Name and typography are sized against the artboard, not the viewport. */
+.hero.hero-layered .hero-layered-name {
+  position: absolute;
+  z-index: 5;
+  top: 4%;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: none;
+  margin: 0;
+  color: #fff;
+  font: 700 clamp(1.25rem, 2.8cqw, 2.8rem)/1.15 Caveat, "Noto Sans JP", sans-serif;
+  letter-spacing: -.02em;
+  white-space: nowrap;
+}
+
+.hero-layered-name::before,
+.hero-layered-name::after {
+  content: "";
+  display: inline-block;
+  width: .55em;
+  height: 2px;
+  margin: 0 .4em .25em;
+  border-radius: 999px;
+  background: currentColor;
+  transform: rotate(15deg);
+}
+.hero-layered-name::after { transform: rotate(-15deg); }
+
+.hero.hero-layered .hero-layered-headline {
+  position: static;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  letter-spacing: 0;
+  pointer-events: none;
+}
+
+.hero.hero-layered .hero-layered-headline span { color: #fff; }
+
+.hero-layered-words {
+  position: absolute;
+  z-index: 4;
+  display: block;
+  margin: 0;
+  font-family: Caveat, Manrope, "Noto Sans JP", sans-serif;
+  font-size: clamp(2rem, 7.2cqw, 7.2rem);
+  font-weight: 700;
+  line-height: .98;
+  letter-spacing: -.035em;
+  white-space: nowrap;
+  text-shadow: 0 4px 20px rgba(19,100,159,.09);
+}
+.hero-layered-words > span { display: block; }
+
+.hero-layered-words-left {
+  top: 24%;
+  left: 16%;
+  width: 26%;
+  text-align: center;
+  transform: rotate(-3deg);
+}
+
+.hero-layered-words-right {
+  top: 31%;
+  left: 63%;
+  width: 30%;
+  text-align: left;
+  transform: rotate(2deg);
+}
+
+.hero-layered[data-language="ja"] .hero-layered-words {
+  /* Yomogi gives the Japanese headline the same loose, handwritten energy
+     as Caveat does for the Indonesian and English versions. */
+  font-family: "Yomogi", "Noto Sans JP", sans-serif;
+  font-size: clamp(1.5rem, 5.4cqw, 5.4rem);
+  font-weight: 400;
+  line-height: 1.18;
+  letter-spacing: -.015em;
+  text-shadow: 0 4px 20px rgba(19,100,159,.12);
+}
+
+/* Contain the entire asset in a bounded box: the head cannot be pushed
+   above the artboard when the viewport is short. The cloud covers its base. */
+.hero-layer-character {
+  z-index: 3;
+  top: 14%;
+  left: 28%;
+  width: 44%;
+  height: 92%;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(0 16px 30px rgba(20,81,123,.05));
+}
+
+/* The lower area stays transparent so the hero sky continues to the bottom.
+   The main cloud itself provides the white foreground shape. */
+.hero-layered-bottom {
+  position: relative;
+  z-index: 6;
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+  align-items: center;
+  min-height: var(--hero-copy-h);
+  width: 100%;
+  padding: 16px 24px max(24px, env(safe-area-inset-bottom));
+  background: transparent;
+  text-align: center;
+}
+
+.hero-layer-cloud-main {
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  bottom: 100%;
+  width: 112%;
+  /* cloud-main.webp is 2048 x 768. Keep its full proportions instead
+     of cropping the crest into a shallow strip with object-fit: cover.
+     The image overlaps the transparent lower area while the hero gradient
+     continues behind it all the way to the section bottom. */
+  height: auto;
+  aspect-ratio: 8 / 3;
+  transform: translate(-50%, 52%);
+  overflow: visible;
+  pointer-events: none;
+}
+.hero-layer-cloud-main img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+  object-fit: contain;
+  user-select: none;
+}
+
+.hero.hero-layered .hero-layered-bottom p {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 38ch);
+  max-width: 620px;
+  margin: 0;
+  color: #24558a;
+  font: 500 clamp(1rem, 1.6vw, 1.5rem)/1.45 Inter, "Noto Sans JP", sans-serif;
+  letter-spacing: -.015em;
+  text-wrap: balance;
+}
+
+.hero-layered-cta {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-top: 12px;
+  padding: 10px 18px;
+  border: 1px solid rgba(57,118,232,.18);
+  border-radius: 999px;
+  background: #f4f8ff;
+  color: var(--blue);
+  font-size: .875rem;
+  font-weight: 700;
+  box-shadow: 0 8px 24px rgba(41,100,173,.055);
+  transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+}
+.hero-layered-cta:hover,
+.hero-layered-cta:focus-visible {
+  transform: translateY(-2px);
+  background: #fff;
+  box-shadow: 0 12px 30px rgba(41,100,173,.10);
+}
+.hero-layered-cta:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
+
+/* Ornaments share the same artboard as the character and headline. */
+.hero-layer-cloud-side { z-index: 1; width: 19%; opacity: .95; }
+.hero-layer-cloud-left { left: -9%; top: 22%; }
+.hero-layer-cloud-right { right: -9%; top: 38%; }
+
+.hero-layer-doodle { z-index: 2; width: 4%; opacity: .9; }
+.hero-layer-doodle-left { left: 17%; top: 43%; transform: rotate(-8deg); }
+.hero-layer-doodle-right { right: 10%; top: 25%; transform: rotate(7deg); }
+
+.hero-layer-note {
+  /* Direct child of .hero-layered-art: above .hero-layered-bottom (z-index: 6)
+     while the character remains inside the rear .hero-layered-scene. */
+  z-index: 8;
+  width: 12%;
+  filter: drop-shadow(0 10px 20px rgba(24,88,135,.07));
+}
+.hero-layer-note-aa { left: 12%; top: 64%; transform: rotate(-7deg); }
+.hero-layer-note-ja { right: 12%; top: 65%; transform: rotate(7deg); }
+.hero-layer-plane { z-index: 2; right: 19%; top: 18%; width: 9%; }
+
+/* Match the existing public navbar breakpoint. */
+@media (max-width: 850px) {
+  .hero.hero-layered { --hero-nav-h: 64px; }
+}
+
+/* Portrait tablets: enlarge the character and bring the words inwards.
+   Landscape tablets keep the wide reference composition above. */
+@media (min-width: 701px) and (max-aspect-ratio: 1/1) {
+  .hero.hero-layered {
+    background:
+      radial-gradient(circle at 50% 27%, rgba(255,255,255,.12), transparent 31%),
+      linear-gradient(
+        180deg,
+        var(--hero-sky-top) 0%,
+        var(--hero-sky-mid) 54%,
+        #aee5fb 74%,
+        #edfaff 90%,
+        #fff 100%
+      );
+  }
+
+  .hero-layered-art { width: min(100%, 1100px); aspect-ratio: 1 / 1; }
+  .hero.hero-layered .hero-layered-name { top: 5%; font-size: clamp(1.5rem, 4cqw, 2.75rem); }
+  .hero-layered-words { font-size: clamp(3rem, 7.6cqw, 5.25rem); }
+  .hero-layered-words-left { left: 4%; top: 21%; width: 39%; text-align: center; }
+  .hero-layered-words-right { left: 63%; top: 29%; width: 35%; }
+  .hero-layered[data-language="ja"] .hero-layered-words { font-size: clamp(1.9rem, 5.8cqw, 3.9rem); }
+  .hero-layer-character { top: 14%; left: 15%; width: 70%; height: 90%; }
+  .hero-layer-cloud-left { left: -10%; top: 31%; }
+  .hero-layer-cloud-right { right: -10%; top: 43%; }
+  .hero-layer-note { width: 15%; }
+  .hero-layer-note-aa { left: 4%; top: 60%; }
+  .hero-layer-note-ja { right: 4%; top: 64%; }
+  .hero-layer-plane { right: 13%; top: 17%; width: 11%; }
+  .hero-layer-doodle-left { left: 4%; top: 44%; }
+  .hero-layer-doodle-right { right: 5%; top: 21%; }
+}
+
+/* Phones: keep the two phrases above the portrait, without a tall empty
+   gap. The description and link retain readable sizes in normal flow. */
+@media (max-width: 700px) {
+  .hero.hero-layered {
+    background:
+      radial-gradient(circle at 50% 24%, rgba(255,255,255,.11), transparent 30%),
+      linear-gradient(
+        180deg,
+        var(--hero-sky-top) 0%,
+        var(--hero-sky-mid) 48%,
+        #9fdffa 64%,
+        #dff5fd 78%,
+        #fff 91%,
+        #fff 100%
+      );
+  }
+
+  .hero-layered-art { width: 100%; aspect-ratio: 4 / 5.2; }
+  .hero.hero-layered .hero-layered-name { top: 4%; font-size: clamp(1.25rem, 5.5cqw, 2rem); }
+  .hero-layered-words { font-size: clamp(2rem, 10.2cqw, 4rem); line-height: 1; }
+  .hero-layered-words-left { left: 6%; top: 15%; width: 47%; text-align: left; }
+  .hero-layered-words-right { left: 52%; top: 22%; width: 45%; text-align: left; }
+  .hero-layered[data-language="ja"] .hero-layered-words { font-size: clamp(1.4rem, 7.4cqw, 2.8rem); }
+  .hero-layer-character { top: 31%; left: 5%; width: 90%; height: 74%; }
+  .hero-layer-cloud-main { width: 135%; }
+  .hero-layered-bottom { padding-inline: 22px; }
+  .hero.hero-layered .hero-layered-bottom p { max-width: 34ch; font-size: 1rem; }
+  .hero-layer-cloud-side { width: 30%; }
+  .hero-layer-cloud-left { left: -15%; top: 35%; }
+  .hero-layer-cloud-right { right: -15%; top: 46%; }
+  .hero-layer-doodle { display: none; }
+  .hero-layer-note { width: 16%; }
+  .hero-layer-note-aa { left: 2%; top: 59%; }
+  .hero-layer-note-ja { right: 2%; top: 63%; }
+  .hero-layer-plane { right: 7%; top: 11%; width: 12%; }
+}
+
+/* Small landscape screens use the wide arrangement and may scroll
+   vertically; no fixed viewport-height clipping is reintroduced. */
+@media (max-width: 700px) and (min-aspect-ratio: 1/1) {
+  .hero.hero-layered {
+    background:
+      radial-gradient(circle at 50% 27%, rgba(255,255,255,.12), transparent 31%),
+      linear-gradient(
+        180deg,
+        var(--hero-sky-top) 0%,
+        var(--hero-sky-mid) 60%,
+        var(--hero-sky-bottom) 88%,
+        #eefaff 97%,
+        #fff 100%
+      );
+  }
+
+  .hero-layered-art { aspect-ratio: 16 / 8.5; }
+  .hero.hero-layered .hero-layered-name { top: 3%; font-size: clamp(1.25rem, 3.5cqw, 1.5rem); }
+  .hero-layered-words { font-size: clamp(1.5rem, 7.2cqw, 3rem); }
+  .hero-layered-words-left { left: 10%; top: 24%; width: 30%; text-align: center; }
+  .hero-layered-words-right { left: 63%; top: 32%; width: 35%; }
+  .hero-layered[data-language="ja"] .hero-layered-words { font-size: clamp(1.1rem, 5.2cqw, 2.2rem); }
+  .hero-layer-character { top: 16%; left: 28%; width: 44%; height: 92%; }
+  .hero-layer-cloud-main { width: 112%; }
+  .hero-layer-note { width: 12%; }
+  .hero-layer-note-aa { left: 6%; top: 66%; }
+  .hero-layer-note-ja { right: 6%; top: 68%; }
+  .hero-layer-plane { right: 15%; top: 16%; width: 9%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-layered-cta { transition: none; }
+}
+/* ================================================================
+   HOME — ABOUT PREVIEW / SIMPLE
+   Calm editorial layout: text + portrait + one understated action.
+   ================================================================ */
+.about-preview.about-preview-v2 {
+  display: grid;
+  place-items: center;
+  min-height: 100svh;
+  padding: clamp(92px, 8vw, 118px) clamp(22px, 6vw, 90px) clamp(42px, 6vw, 72px);
+  background: #fcfcfa;
+}
+
+.about-preview-board {
+  width: min(1260px, 100%);
+  display: grid;
+  gap: clamp(42px, 6vw, 76px);
+}
+
+.about-preview-kicker { align-self: start; }
+
+.about-preview-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr);
+  align-items: center;
+  gap: clamp(48px, 8vw, 120px);
+}
+
+.about-preview-copy-v2 {
+  min-width: 0;
+  max-width: 720px;
+}
+
+.about-preview-heading-wrap {
+  width: fit-content;
+  max-width: 100%;
+}
+
+.about-preview.about-preview-v2 .about-preview-heading-wrap h2 {
+  margin: 0;
+  font: 800 clamp(3.7rem, 6.2vw, 6.8rem)/.9 Manrope, "Noto Sans JP", sans-serif;
+  letter-spacing: -.065em;
+  color: #171717;
+}
+
+.about-preview-heading-wrap h2 > span { display: block; }
+
+.about-preview-bio {
+  max-width: 620px;
+  margin: clamp(24px, 2.5vw, 34px) 0 0;
+  color: #626b78;
+  font-size: clamp(1rem, 1.25vw, 1.16rem);
+  line-height: 1.75;
+}
+
+.about-preview-focus {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 0;
+  margin-top: clamp(20px, 2vw, 28px);
+  color: #4e5968;
+  font-size: clamp(.82rem, .95vw, .94rem);
+  font-weight: 600;
+}
+
+.about-preview-focus span {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.about-preview-focus span:not(:last-child)::after {
+  content: "·";
+  margin-inline: 12px;
+  color: #aab2bd;
+}
+
+.about-preview-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: clamp(28px, 3vw, 40px);
+  padding: 0 0 5px;
+  border-bottom: 1px solid rgba(57,118,232,.32);
+  color: var(--blue);
+  font-weight: 800;
+  transition: border-color .2s ease, opacity .2s ease;
+}
+
+.about-preview-cta span {
+  transition: transform .2s ease;
+}
+
+.about-preview-cta:hover,
+.about-preview-cta:focus-visible {
+  border-color: var(--blue);
+}
+
+.about-preview-cta:hover span,
+.about-preview-cta:focus-visible span {
+  transform: translateX(4px);
+}
+
+.about-preview-visual {
+  position: relative;
+  min-height: clamp(340px, 34vw, 450px);
+  display: grid;
+  place-items: center;
+}
+
+.about-preview-visual::before {
+  content: "";
+  position: absolute;
+  width: clamp(290px, 31vw, 420px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #edf4ff;
+}
+
+.about-preview-portrait-ring {
+  position: relative;
+  z-index: 2;
+  width: clamp(275px, 29vw, 390px);
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.about-preview-portrait {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.about-preview-thats-me {
+  position: absolute;
+  z-index: 4;
+  left: -2%;
+  top: 6%;
+  width: clamp(100px, 10vw, 138px);
+  color: var(--blue);
+  pointer-events: none;
+}
+
+.about-preview-thats-me span {
+  display: block;
+  font: 700 clamp(1.3rem, 2vw, 1.9rem)/1 Yomogi, Caveat, "Noto Sans JP", cursive;
+  letter-spacing: -.035em;
+  transform: rotate(-5deg);
+}
+
+.about-preview-thats-me img {
+  display: block;
+  width: 68%;
+  margin: 2px 0 0 12px;
+}
+
+@media (max-width: 1024px) {
+  .about-preview.about-preview-v2 {
+    padding-inline: clamp(22px, 4vw, 44px);
+  }
+
+  .about-preview-main {
+    grid-template-columns: minmax(0, 1fr) minmax(250px, .72fr);
+    gap: clamp(32px, 5vw, 64px);
+  }
+
+  .about-preview.about-preview-v2 .about-preview-heading-wrap h2 {
+    font-size: clamp(3.25rem, 7vw, 5.4rem);
+  }
+
+  .about-preview-portrait-ring { width: clamp(250px, 31vw, 340px); }
+  .about-preview-visual::before { width: clamp(270px, 33vw, 360px); }
+}
+
+@media (max-width: 760px) {
+  .about-preview.about-preview-v2 {
+    min-height: 100svh;
+    padding: 88px 20px 44px;
+    place-items: start stretch;
+  }
+
+  .about-preview-board {
+    gap: 28px;
+  }
+
+  .about-preview-main {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: stretch;
+  }
+
+  .about-preview-copy-v2 {
+    order: 1;
+    max-width: none;
+  }
+
+  .about-preview-visual {
+    order: 2;
+    width: 100%;
+    min-height: 270px;
+  }
+
+  .about-preview.about-preview-v2 .about-preview-heading-wrap h2 {
+    font-size: clamp(2.8rem, 13vw, 4.35rem);
+    line-height: .91;
+  }
+
+  .about-preview-bio {
+    margin-top: 18px;
+    max-width: 38rem;
+    font-size: .94rem;
+    line-height: 1.65;
+  }
+
+  .about-preview-focus {
+    margin-top: 18px;
+    font-size: .8rem;
+  }
+
+  .about-preview-focus span:not(:last-child)::after {
+    margin-inline: 9px;
+  }
+
+  .about-preview-cta {
+    margin-top: 24px;
+  }
+
+  .about-preview-visual::before {
+    width: clamp(230px, 66vw, 300px);
+  }
+
+  .about-preview-portrait-ring {
+    width: clamp(215px, 62vw, 285px);
+  }
+
+  .about-preview-thats-me {
+    left: max(2%, calc(50% - 155px));
+    top: 4%;
+    width: 94px;
+  }
+
+  .about-preview-thats-me span { font-size: 1.28rem; }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .showcase-image-open {
+    opacity: .9;
+    transform: none;
+  }
+}
+
+@media (max-width: 420px) {
+  .about-preview.about-preview-v2 {
+    padding-inline: 17px;
+    padding-bottom: 34px;
+  }
+
+  .about-preview-board { gap: 24px; }
+  .about-preview-visual { min-height: 240px; }
+  .about-preview-portrait-ring { width: min(235px, 68vw); }
+  .about-preview-visual::before { width: min(250px, 72vw); }
+
+  .about-preview-focus {
+    gap: 7px 0;
+  }
+
+  .about-preview-focus span:not(:last-child)::after {
+    margin-inline: 7px;
+  }
+}
+
+@media (max-height: 700px) and (min-width: 761px) {
+  .about-preview.about-preview-v2 {
+    padding-top: 84px;
+    padding-bottom: 28px;
+  }
+
+  .about-preview-board { gap: 24px; }
+  .about-preview-visual { min-height: 300px; }
+  .about-preview-portrait-ring { width: min(300px, 29vw); }
+  .about-preview-visual::before { width: min(320px, 31vw); }
+  .about-preview-bio { margin-top: 18px; }
+  .about-preview-cta { margin-top: 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-preview-cta,
+  .about-preview-cta span { transition: none; }
+}
+
+
+/* ================================================================
+   HOME — MORE ABOUT ME / desktop refinement
+   Keeps the existing phone/tablet portrait layout untouched.
+   ================================================================ */
+@media (min-width: 900px) and (orientation: landscape) {
+  .more-about {
+    justify-content: center;
+    padding-top: clamp(96px, 9vh, 118px);
+    padding-bottom: clamp(34px, 5vh, 56px);
+  }
+
+  .more-heading {
+    align-items: flex-end;
+    margin-bottom: clamp(22px, 2.6vh, 32px);
+  }
+
+  .more-heading h2 {
+    max-width: none;
+    font-size: clamp(4.15rem, 6.15vw, 6.7rem);
+    line-height: .9;
+  }
+
+  .more-heading-accent {
+    width: clamp(62px, 6.4vw, 92px);
+    margin-right: 2.5%;
+    margin-bottom: 6px;
+  }
+
+  .expand-cards {
+    width: 100%;
+    max-width: 1500px;
+    height: clamp(350px, 46vh, 455px);
+    min-height: 350px;
+    margin-inline: auto;
+    align-items: stretch;
+    gap: clamp(12px, 1.15vw, 18px);
+  }
+
+  .expand-card {
+    flex: .78 1 0;
+    min-width: 0;
+    padding: clamp(22px, 1.9vw, 30px);
+    border-radius: clamp(24px, 2vw, 30px);
+    transform: none;
+    will-change: flex, transform;
+  }
+
+  /* About is the featured card only while the card row is idle. */
+  .more-card-about {
+    flex: 1.56 1 0;
+  }
+
+  /* Moving through the row first collapses everything, then expands
+     only the card currently under the pointer. This prevents a
+     previous React active state from visually getting "stuck". */
+  .expand-cards:hover .expand-card {
+    flex: .70 1 0;
+    transform: none;
+  }
+
+  .expand-cards:hover .expand-card:hover,
+  .expand-card.active,
+  .expand-card:focus-visible {
+    flex: 1.78 1 0;
+    transform: translateY(-4px);
+    box-shadow: 0 24px 64px rgba(25, 44, 78, .12);
+  }
+
+  /* Give the copy a protected left column instead of letting it
+     stretch under the illustration. */
+  .more-card-copy,
+  .more-card-nihongo .more-card-copy,
+  .more-card-works .more-card-copy {
+    left: clamp(22px, 1.9vw, 30px);
+    right: auto;
+    bottom: clamp(22px, 2vw, 30px);
+    width: min(43%, 410px);
+    max-width: 410px;
+    transition: width .42s cubic-bezier(.2,.82,.2,1);
+  }
+
+  .card-body strong,
+  .more-card-nihongo .card-body strong,
+  .more-card-works .card-body strong {
+    font-size: clamp(1.85rem, 2.25vw, 2.55rem);
+    line-height: .98;
+    overflow-wrap: anywhere;
+  }
+
+  .card-subtitle {
+    max-width: 360px;
+    max-height: 5rem;
+    margin-top: 10px;
+    font-size: clamp(.82rem, .92vw, .96rem);
+    line-height: 1.45;
+    transition: opacity .22s ease, transform .28s ease, max-height .32s ease, margin .32s ease;
+  }
+
+  .card-cta {
+    max-height: 44px;
+    margin-top: 15px;
+    transition: opacity .22s ease, transform .28s ease, max-height .32s ease, margin .32s ease;
+  }
+
+  /* Collapsed cards show only the essentials. This is the main fix
+     for text/image collisions on desktop. */
+  .more-card-nihongo:not(:hover):not(.active):not(:focus-visible) .more-card-copy,
+  .more-card-works:not(:hover):not(.active):not(:focus-visible) .more-card-copy,
+  .expand-cards:hover .more-card-about:not(:hover):not(.active):not(:focus-visible) .more-card-copy {
+    width: calc(100% - clamp(44px, 3.8vw, 60px));
+    max-width: none;
+  }
+
+  .more-card-nihongo:not(:hover):not(.active):not(:focus-visible) .card-body strong,
+  .more-card-works:not(:hover):not(.active):not(:focus-visible) .card-body strong,
+  .expand-cards:hover .more-card-about:not(:hover):not(.active):not(:focus-visible) .card-body strong {
+    font-size: clamp(1.22rem, 1.55vw, 1.55rem);
+    line-height: 1.02;
+  }
+
+  .more-card-nihongo:not(:hover):not(.active):not(:focus-visible) .card-subtitle,
+  .more-card-works:not(:hover):not(.active):not(:focus-visible) .card-subtitle,
+  .expand-cards:hover .more-card-about:not(:hover):not(.active):not(:focus-visible) .card-subtitle {
+    max-height: 0;
+    margin-top: 0;
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .more-card-nihongo:not(:hover):not(.active):not(:focus-visible) .card-cta,
+  .more-card-works:not(:hover):not(.active):not(:focus-visible) .card-cta,
+  .expand-cards:hover .more-card-about:not(:hover):not(.active):not(:focus-visible) .card-cta {
+    max-height: 0;
+    margin-top: 0;
+    opacity: 0;
+    overflow: hidden;
+    transform: translateY(8px);
+  }
+
+  /* A soft local scrim protects the left copy column. Art stays rich
+     and visible on the right instead of sitting directly behind text. */
+  .expand-card::after {
+    content: '';
+    position: absolute;
+    z-index: 4;
+    inset: 0 auto 0 0;
+    width: 69%;
+    pointer-events: none;
+  }
+
+  .more-card-about::after {
+    background: linear-gradient(90deg, rgba(52,126,226,.99) 0%, rgba(52,126,226,.93) 43%, rgba(52,126,226,.48) 72%, transparent 100%);
+  }
+
+  .more-card-nihongo::after {
+    background: linear-gradient(90deg, rgba(255,250,241,.99) 0%, rgba(255,250,241,.95) 43%, rgba(255,250,241,.52) 73%, transparent 100%);
+  }
+
+  .more-card-works::after {
+    background: linear-gradient(90deg, rgba(24,24,24,.99) 0%, rgba(24,24,24,.94) 43%, rgba(24,24,24,.54) 73%, transparent 100%);
+  }
+
+  .more-card-top,
+  .more-card-copy {
+    z-index: 6;
+  }
+
+  /* About art: stays on the right and no longer pushes into the copy. */
+  .more-card-about .more-card-blob {
+    width: min(39vw, 455px);
+    right: -5%;
+    bottom: -28%;
+  }
+
+  .more-card-about .more-main-illustration {
+    width: min(49%, 440px);
+    right: -1%;
+    bottom: -8%;
+  }
+
+  .expand-cards:hover .more-card-about:not(:hover):not(.active):not(:focus-visible) .more-main-illustration {
+    width: 78%;
+    right: -25%;
+    bottom: -10%;
+    transform: none;
+  }
+
+  .expand-cards:hover .more-card-about:not(:hover):not(.active):not(:focus-visible) .doodle-about-copy {
+    opacity: 0;
+  }
+
+  /* Nihongo art: keep the artwork scale stable. The card expansion only
+     slides/repositions the artwork, matching the About/Works behavior. */
+  .more-card-nihongo .more-card-blob {
+    width: 125%;
+    left: -10%;
+    bottom: -60%;
+  }
+
+  .more-card-nihongo .more-main-illustration {
+    width: auto;
+    max-width: none;
+    height: 114%;
+    left: auto;
+    right: -52%;
+    bottom: -9%;
+    transform: none;
+  }
+
+  .more-card-nihongo:hover .more-main-illustration,
+  .more-card-nihongo.active .more-main-illustration,
+  .more-card-nihongo:focus-visible .more-main-illustration {
+    width: auto;
+    height: 114%;
+    left: auto;
+    right: -4%;
+    bottom: -9%;
+    transform: translateX(-1%);
+  }
+
+  /* These layers use viewport-clamped widths instead of percentages of the
+     expanding card, so they no longer grow/zoom when Nihongo opens. */
+  .more-card-nihongo .layer-books {
+    width: clamp(200px, 19vw, 300px);
+    right: -18%;
+    bottom: -6%;
+    transform: rotate(-4deg);
+  }
+
+  .more-card-nihongo:hover .layer-books,
+  .more-card-nihongo.active .layer-books,
+  .more-card-nihongo:focus-visible .layer-books {
+    width: clamp(200px, 19vw, 300px);
+    right: -1%;
+    bottom: -6%;
+    transform: rotate(-5deg);
+  }
+
+  .more-card-nihongo .layer-note {
+    width: clamp(170px, 16vw, 250px);
+    left: auto;
+    right: 40%;
+    bottom: -7%;
+    transform: rotate(7deg);
+  }
+
+  .more-card-nihongo:hover .layer-note,
+  .more-card-nihongo.active .layer-note,
+  .more-card-nihongo:focus-visible .layer-note {
+    width: clamp(170px, 16vw, 250px);
+    left: auto;
+    right: 48%;
+    bottom: -7%;
+    transform: rotate(6deg);
+  }
+
+  .more-card-nihongo:not(:hover):not(.active):not(:focus-visible) .doodle-sakura-petal {
+    opacity: 0;
+  }
+
+  /* Works art behaves like a right-side poster rather than a full-card
+     background, leaving a stable dark copy zone on the left. */
+  .more-card-works .more-main-illustration {
+    width: auto;
+    max-width: none;
+    height: 108%;
+    right: -42%;
+    bottom: -4%;
+  }
+
+  .more-card-works:hover .more-main-illustration,
+  .more-card-works.active .more-main-illustration,
+  .more-card-works:focus-visible .more-main-illustration {
+    width: auto;
+    height: 108%;
+    right: -7%;
+    bottom: -4%;
+    transform: translate(-2%, 0) scale(1.025);
+  }
+
+  .more-card-works:not(:hover):not(.active):not(:focus-visible) .doodle-works-copy {
+    opacity: .42;
+  }
+
+  .more-card-index {
+    min-width: 43px;
+    height: 43px;
+    border-radius: 12px;
+    font-size: .78rem;
+  }
+
+  .more-card-mark {
+    width: 32px;
+    height: 32px;
+    border-radius: 11px;
+    font-size: .92rem;
+  }
+}
+
+/* ================================================================
+   HOME — CONTACT FOOTER V2
+   icon-only social links + PNG grass + delayed service popout
+   ================================================================ */
+
+.contact-footer {
+  min-height: 100svh;
+  display: block;
+  padding:
+    clamp(98px, 11vw, 150px)
+    clamp(22px, 6vw, 90px)
+    clamp(118px, 15vh, 164px);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 82% 21%, rgba(57,118,232,.075), transparent 26%),
+    #fbfcfa;
+  color: #171717;
+}
+
+.contact-footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(57,118,232,.025) 1px, transparent 1px),
+    linear-gradient(rgba(57,118,232,.025) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,.32), transparent 58%);
+}
+
+.contact-footer-content {
+  position: relative;
+  z-index: 4;
+  width: min(1220px, 100%);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, .85fr);
+  gap: clamp(50px, 10vw, 150px);
+  align-items: center;
+}
+
+.contact-intro h2 {
+  margin: 10px 0 18px;
+  color: #171717;
+  font-size: clamp(4.2rem, 8vw, 8.2rem);
+  line-height: .88;
+}
+
+.contact-intro > p {
+  max-width: 500px;
+  margin: 0;
+  color: #747c87;
+  font-size: clamp(.98rem, 1.2vw, 1.12rem);
+  line-height: 1.7;
+}
+
+.contact-connect {
+  align-self: center;
+}
+
+.contact-connect-title {
+  margin: 0 0 24px;
+  color: #3c4654;
+  font: 700 clamp(1.15rem, 2vw, 1.7rem)/1.2 Manrope, "Noto Sans JP", sans-serif;
+  letter-spacing: -.03em;
+}
+
+.contact-footer .socials {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: clamp(12px, 1.4vw, 18px);
+  font: inherit;
+}
+
+.social-icon-link {
+  width: clamp(52px, 4.8vw, 68px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border: 1px solid #dce2ea;
+  border-radius: 20px;
+  background: rgba(255,255,255,.74);
+  color: #84909f;
+  box-shadow: 0 12px 38px rgba(40,60,90,.055);
+  backdrop-filter: blur(8px);
+  transition:
+    transform .22s ease,
+    color .22s ease,
+    border-color .22s ease,
+    background-color .22s ease,
+    box-shadow .22s ease;
+}
+
+.social-icon-link svg {
+  width: 48%;
+  height: 48%;
+  overflow: visible;
+}
+
+.social-icon-link svg * {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.social-icon-link svg path:not([d^="m4.2 7"]),
+.social-icon-link svg rect:not(:first-child),
+.social-icon-link svg circle.social-icon-fill {
+  fill: currentColor;
+  stroke: none;
+}
+
+.social-icon-link:hover,
+.social-icon-link:focus-visible {
+  transform: translateY(-5px);
+  color: var(--blue);
+  border-color: rgba(57,118,232,.28);
+  background: #fff;
+  box-shadow: 0 18px 44px rgba(57,118,232,.11);
+}
+
+.social-icon-link:focus-visible {
+  outline: 3px solid rgba(57,118,232,.16);
+  outline-offset: 4px;
+}
+
+/* Individual icon drawing corrections */
+.social-icon-link[aria-label="Instagram"] svg rect,
+.social-icon-link[aria-label="Instagram"] svg circle:not(.social-icon-fill),
+.social-icon-link[aria-label="Email"] svg rect,
+.social-icon-link[aria-label="Email"] svg path {
+  fill: none;
+  stroke: currentColor;
+}
+
+.social-icon-link[aria-label="Behance"] svg path,
+.social-icon-link[aria-label="GitHub"] svg path,
+.social-icon-link[aria-label="LinkedIn"] svg path,
+.social-icon-link[aria-label="LinkedIn"] svg rect,
+.social-icon-link[aria-label="LinkedIn"] svg circle {
+  fill: currentColor;
+  stroke: none;
+}
+
+.footer-grass {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: clamp(230px, 34vh, 300px);
+  background-image: url('/footer/footer-grass.webp');
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: auto 100%;
+  pointer-events: none;
+  user-select: none;
+}
+
+.contact-footer .footer-meta {
+  position: absolute;
+  z-index: 5;
+  left: clamp(22px, 6vw, 90px);
+  right: clamp(22px, 6vw, 90px);
+  bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  color: rgba(35,55,42,.68);
+  font-size: .78rem;
+}
+
+/* Delayed services teaser */
+.service-popout {
+  position: fixed;
+  z-index: 120;
+  right: clamp(18px, 3vw, 42px);
+  bottom: clamp(18px, 3vw, 34px);
+  width: min(410px, calc(100vw - 36px));
+  padding: 24px;
+  border: 1px solid rgba(57,118,232,.16);
+  border-radius: 26px;
+  background: rgba(255,255,255,.94);
+  color: #171717;
+  box-shadow: 0 28px 90px rgba(23,42,74,.2);
+  backdrop-filter: blur(18px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(28px) scale(.965);
+  transform-origin: right bottom;
+  transition:
+    opacity .42s ease,
+    visibility .42s ease,
+    transform .48s cubic-bezier(.2,.82,.2,1);
+}
+
+.service-popout.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.service-popout-close {
+  position: absolute;
+  top: 13px;
+  right: 13px;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: #f0f3f7;
+  color: #626c79;
+  cursor: pointer;
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.service-popout-kicker {
+  padding-right: 42px;
+  color: var(--blue);
+  font-size: .66rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+}
+
+.service-popout h3 {
+  max-width: 330px;
+  margin: 12px 0 10px;
+  font: 800 clamp(1.75rem, 2.6vw, 2.45rem)/.98 Manrope, "Noto Sans JP", sans-serif;
+  letter-spacing: -.05em;
+}
+
+.service-popout > p {
+  margin: 0;
+  color: #707986;
+  font-size: .88rem;
+  line-height: 1.55;
+}
+
+.service-popout-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 18px;
+}
+
+.service-popout-tags span {
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: #edf3ff;
+  color: #3568c9;
+  font-size: .69rem;
+  font-weight: 700;
+}
+
+.service-popout-cta {
+  display: inline-flex;
+  margin-top: 20px;
+  color: #171717;
+  font-size: .82rem;
+  font-weight: 800;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+}
+
+@media (max-width: 850px) {
+  .contact-footer {
+    padding:
+      clamp(90px, 11svh, 112px)
+      22px
+      clamp(118px, 19svh, 154px);
+  }
+
+  .contact-footer-content {
+    grid-template-columns: 1fr;
+    gap: clamp(38px, 7svh, 64px);
+    align-items: start;
+  }
+
+  .contact-intro h2 {
+    font-size: clamp(4rem, 18vw, 7rem);
+  }
+
+  .contact-connect-title {
+    margin-bottom: 18px;
+  }
+
+  .social-icon-link {
+    width: clamp(50px, 14vw, 62px);
+    border-radius: 17px;
+  }
+
+  .footer-grass {
+    height: clamp(175px, 25svh, 220px);
+    bottom: -2px;
+    background-size: auto 100%;
+  }
+
+  .contact-footer .footer-meta {
+    left: 22px;
+    right: 22px;
+    bottom: 18px;
+    flex-direction: column;
+    gap: 4px;
+    font-size: .7rem;
+  }
+
+  .service-popout {
+    left: 50%;
+    right: auto;
+    bottom: 16px;
+    width: min(420px, calc(100vw - 28px));
+    padding: 21px;
+    border-radius: 23px;
+    transform: translate(-50%, 26px) scale(.965);
+    transform-origin: center bottom;
+  }
+
+  .service-popout.show {
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+@media (max-height: 650px) and (min-width: 851px) {
+  .contact-footer {
+    padding-top: 92px;
+    padding-bottom: 104px;
+  }
+
+  .contact-intro h2 {
+    font-size: clamp(3.6rem, 7vw, 6.4rem);
+  }
+
+  .footer-grass {
+    height: 210px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-popout,
+  .social-icon-link {
+    transition: none;
+  }
+}
+

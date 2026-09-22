@@ -1,0 +1,1080 @@
+/* ================================================================
+   ABOUT ROUTE — isolate long-page behavior from Home
+   ================================================================ */
+html.about-route-active {
+  scroll-snap-type: none !important;
+}
+
+/* ================================================================
+   ABOUT / JOURNEY — SCRAPBOOK STICKY NOTES
+   Scoped to About Journey so Home styles stay untouched.
+   ================================================================ */
+.activity-section .activity-board.scrapbook-board {
+  position: relative;
+  width: min(1240px, 100%);
+  max-width: none;
+  margin: 0 auto;
+  padding: 8px 0 50px;
+}
+
+.activity-section .scrapbook-board .activity-connectors {
+  position: absolute;
+  inset: 0 auto auto 0;
+  z-index: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.activity-section .scrapbook-board .activity-connectors path {
+  fill: none;
+  stroke: rgba(57,118,232,.23);
+  stroke-width: 1.65;
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+  stroke-dasharray: 2 7;
+}
+
+.activity-section .scrapbook-board .activity-connectors path.parent-line {
+  stroke: rgba(23,23,23,.19);
+  stroke-dasharray: 7 9;
+}
+
+.activity-section .scrapbook-board .activity-year {
+  position: relative;
+  z-index: 1;
+  padding: 34px 0 72px;
+}
+
+.activity-section .scrapbook-board .year-divider {
+  width: 100%;
+  margin: 0 0 18px;
+  gap: 18px;
+  color: #858b94;
+  font: 800 .72rem/1 Manrope, sans-serif;
+  letter-spacing: .2em;
+}
+
+.activity-section .scrapbook-board .year-divider::before,
+.activity-section .scrapbook-board .year-divider::after {
+  background: rgba(23,23,23,.11);
+}
+
+.activity-section .activity-year-canvas {
+  position: relative;
+  width: 100%;
+  height: var(--year-canvas-height, 520px);
+  min-height: 390px;
+}
+
+.activity-section .scrapbook-board .pin-card {
+  --paper: #fffefa;
+  position: absolute;
+  z-index: var(--note-z, 2);
+  left: var(--note-left, 0);
+  top: var(--note-top, 0);
+  width: var(--note-width, 28%);
+  min-height: 0;
+  margin: 0;
+  padding: clamp(24px,2.2vw,32px) clamp(20px,2vw,28px) clamp(20px,2vw,26px);
+  border: 1px solid rgba(32,43,60,.11);
+  border-radius: 11px 15px 10px 14px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.26), transparent 30%),
+    var(--paper);
+  color: #171717;
+  box-shadow:
+    0 2px 0 rgba(255,255,255,.7) inset,
+    0 14px 28px rgba(31,43,61,.085),
+    0 2px 6px rgba(31,43,61,.045);
+  transform: rotate(var(--note-tilt,0deg));
+  transform-origin: 50% 12%;
+  text-align: left;
+  overflow: visible;
+  isolation: isolate;
+  transition: transform .26s cubic-bezier(.2,.72,.2,1), box-shadow .26s ease, border-color .26s ease;
+}
+
+.activity-section .scrapbook-board .pin-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: repeating-linear-gradient(0deg, transparent 0 27px, rgba(48,67,95,.022) 28px);
+  pointer-events: none;
+}
+
+.activity-section .scrapbook-board .pin-card::after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  width: 30px;
+  height: 30px;
+  border-radius: 0 0 9px 0;
+  background: linear-gradient(135deg, transparent 0 48%, rgba(31,43,61,.07) 49% 53%, rgba(255,255,255,.66) 54% 100%);
+  pointer-events: none;
+}
+
+.activity-section .scrapbook-board .pin-card.note-paper { --paper: #fffefa; }
+.activity-section .scrapbook-board .pin-card.note-blue { --paper: #edf4ff; border-color: #cfdef9; }
+.activity-section .scrapbook-board .pin-card.note-cream { --paper: #fbf1dc; border-color: #eadfc6; }
+.activity-section .scrapbook-board .pin-card.note-mist { --paper: #f1f3f5; border-color: #dfe3e8; }
+
+.activity-section .scrapbook-board .group-card small {
+  color: var(--blue);
+  font-weight: 800;
+  letter-spacing: .11em;
+}
+
+.activity-section .scrapbook-board .group-card h3 {
+  font-size: clamp(1.65rem,2.4vw,2.45rem);
+}
+
+.activity-section .scrapbook-board .activity-card {
+  appearance: none;
+  cursor: pointer;
+}
+
+.activity-section .scrapbook-board .activity-card.highlighted {
+  border: 2px solid rgba(57,118,232,.88);
+  box-shadow: 0 2px 0 rgba(255,255,255,.75) inset, 0 16px 34px rgba(57,118,232,.13);
+}
+
+.activity-section .scrapbook-board .pin-card h3 {
+  margin: 8px 0 11px;
+  font: 800 clamp(1.28rem,1.8vw,1.9rem)/1.06 Manrope,"Noto Sans JP",sans-serif;
+  letter-spacing: -.043em;
+}
+
+.activity-section .scrapbook-board .pin-card p {
+  margin: 0;
+  color: #69717c;
+  font-size: clamp(.82rem,.9vw,.92rem);
+  line-height: 1.56;
+}
+
+.activity-section .scrapbook-board .pin-card-date {
+  margin-top: 18px;
+  color: #858c96;
+  font-size: .7rem;
+}
+
+.activity-section .scrapbook-board .activity-card-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+}
+
+.activity-section .scrapbook-board .activity-card-badges small {
+  color: var(--blue);
+  font-weight: 800;
+}
+
+.activity-section .scrapbook-board .activity-card-badges em {
+  padding: 4px 7px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.58);
+  border: 1px solid rgba(23,23,23,.055);
+  color: #737983;
+  font-size: .6rem;
+  font-style: normal;
+}
+
+.activity-section .scrapbook-board .activity-card > strong {
+  display: block;
+  margin: -2px 0 10px;
+  color: #3c434d;
+  font-size: .82rem;
+}
+
+.activity-section .scrapbook-board .pin-card:hover,
+.activity-section .scrapbook-board .pin-card:focus-visible {
+  z-index: 20;
+  transform: translateY(-8px) rotate(var(--note-hover-tilt,0deg)) scale(1.012);
+  border-color: rgba(57,118,232,.28);
+  box-shadow: 0 2px 0 rgba(255,255,255,.8) inset, 0 24px 52px rgba(31,43,61,.14);
+}
+
+.activity-section .scrapbook-board .pin-card:focus-visible {
+  outline: 3px solid rgba(57,118,232,.22);
+  outline-offset: 5px;
+}
+
+.activity-section .scrapbook-board .note-fastener {
+  position: absolute;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.activity-section .scrapbook-board .fastener-pin .note-fastener {
+  top: -12px;
+  left: 52%;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(circle at 38% 31%, #b8d1ff 0 14%, #4a84eb 17% 52%, #245bb8 55% 100%);
+  box-shadow: 0 5px 9px rgba(31,75,151,.28);
+}
+
+.activity-section .scrapbook-board .fastener-tape .note-fastener {
+  top: -10px;
+  left: 50%;
+  width: 86px;
+  height: 22px;
+  transform: translateX(-50%) rotate(-2deg);
+  border-radius: 2px;
+  background: repeating-linear-gradient(90deg, rgba(244,226,180,.84) 0 8px, rgba(239,216,161,.76) 8px 9px);
+  box-shadow: 0 2px 4px rgba(60,48,25,.08);
+  opacity: .93;
+}
+
+.activity-section .scrapbook-board .fastener-clip .note-fastener {
+  top: -14px;
+  left: 24px;
+  width: 18px;
+  height: 42px;
+  border: 2px solid #8b929b;
+  border-bottom-color: transparent;
+  border-radius: 12px 12px 5px 5px;
+  transform: rotate(-9deg);
+  opacity: .76;
+}
+
+@media (max-width: 900px) {
+  .activity-section .scrapbook-board .activity-connectors {
+    display: none;
+  }
+
+  .activity-section .activity-year-canvas {
+    height: auto !important;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 27px;
+    padding: 10px 4px 16px;
+  }
+
+  .activity-section .scrapbook-board .pin-card {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: min(var(--mobile-width,86%),620px);
+    align-self: var(--mobile-align,flex-start);
+    padding: 24px 20px 21px;
+  }
+}
+
+@media (max-width: 520px) {
+  .activity-section .scrapbook-board .pin-card {
+    width: min(92%,430px);
+    transform: rotate(calc(var(--note-tilt,0deg) * .72));
+  }
+
+  .activity-section .scrapbook-board .pin-card:hover,
+  .activity-section .scrapbook-board .pin-card:focus-visible {
+    transform: translateY(-4px) rotate(calc(var(--note-hover-tilt,0deg) * .72));
+  }
+}
+
+/* ================================================================
+   ABOUT JOURNEY — RELATIONSHIP CLARITY
+   Scoped only to the scrapbook Journey. Home is untouched.
+   ================================================================ */
+.activity-section .scrapbook-board .activity-relation-legend {
+  position: relative;
+  z-index: 4;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 0 28px auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px 20px;
+  color: #7b828d;
+  font-size: .69rem;
+  line-height: 1.4;
+}
+
+.activity-section .scrapbook-board .activity-relation-legend > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  white-space: nowrap;
+}
+
+.activity-section .scrapbook-board .relation-sample {
+  position: relative;
+  display: inline-block;
+  width: 42px;
+  height: 10px;
+  flex: 0 0 auto;
+}
+
+.activity-section .scrapbook-board .relation-sample::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 7px;
+  top: 50%;
+  border-top: 2px solid;
+  transform: translateY(-50%);
+}
+
+.activity-section .scrapbook-board .relation-sample::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 7px solid;
+  transform: translateY(-50%);
+}
+
+.activity-section .scrapbook-board .relation-sample-group {
+  color: #3976e8;
+}
+
+.activity-section .scrapbook-board .relation-sample-parent {
+  color: #7b8491;
+}
+
+.activity-section .scrapbook-board .relation-sample-parent::before {
+  border-top-style: dashed;
+}
+
+/* Group → activity: blue, solid, directional. */
+.activity-section .scrapbook-board .activity-connectors path.connector-line.group-line {
+  stroke: rgba(57,118,232,.44);
+  stroke-width: 1.75;
+  stroke-dasharray: none;
+  opacity: .84;
+}
+
+/* Parent activity → child activity: slate, dashed, directional. */
+.activity-section .scrapbook-board .activity-connectors path.connector-line.parent-line {
+  stroke: rgba(123,132,145,.58);
+  stroke-width: 1.65;
+  stroke-dasharray: 7 8;
+  opacity: .8;
+}
+
+/* Hover/focus makes only the relevant relationship speak louder. */
+.activity-section .scrapbook-board .activity-connectors path.connector-line {
+  transition:
+    opacity .22s ease,
+    stroke-width .22s ease,
+    filter .22s ease;
+}
+
+.activity-section .scrapbook-board .activity-connectors path.connector-line.relation-active {
+  stroke-width: 2.65;
+  opacity: 1;
+  filter: drop-shadow(0 1px 2px rgba(57,118,232,.16));
+}
+
+.activity-section .scrapbook-board .activity-connectors path.connector-line.parent-line.relation-active {
+  filter: drop-shadow(0 1px 2px rgba(77,87,101,.14));
+}
+
+.activity-section .scrapbook-board .activity-connectors path.connector-line.relation-muted {
+  opacity: .09;
+}
+
+/* Keep the scrapbook wall readable while exposing one relationship at a time. */
+.activity-section .scrapbook-board .pin-card {
+  transition:
+    transform .26s cubic-bezier(.2,.72,.2,1),
+    box-shadow .26s ease,
+    border-color .26s ease,
+    opacity .22s ease,
+    filter .22s ease;
+}
+
+.activity-section .scrapbook-board.has-active-relation .pin-card.relation-muted-node {
+  opacity: .48;
+  filter: saturate(.68);
+}
+
+.activity-section .scrapbook-board .pin-card.relation-connected-node {
+  opacity: 1;
+  border-color: rgba(57,118,232,.25);
+  box-shadow:
+    0 2px 0 rgba(255,255,255,.76) inset,
+    0 18px 36px rgba(31,43,61,.11);
+}
+
+.activity-section .scrapbook-board .pin-card.relation-active-node {
+  opacity: 1;
+  border-color: rgba(57,118,232,.46);
+}
+
+/* Arrowheads need a little breathing room from note edges. */
+.activity-section .scrapbook-board .activity-connectors path.connector-line {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Mobile currently hides the connector SVG, so hide its legend as well. */
+@media (max-width: 900px) {
+  .activity-section .scrapbook-board .activity-relation-legend {
+    display: none;
+  }
+
+  .activity-section .scrapbook-board.has-active-relation .pin-card.relation-muted-node {
+    opacity: 1;
+    filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .activity-section .scrapbook-board .activity-connectors path.connector-line,
+  .activity-section .scrapbook-board .pin-card {
+    transition: none;
+  }
+}
+
+/* ================================================================
+   ABOUT HERO V2 — extended Home About Preview
+   Scoped to /about only. Journey and Home are untouched.
+   ================================================================ */
+.about-page .about-hero.about-hero-v2 {
+  position: relative;
+  min-height: min(100svh, 920px);
+  padding:
+    clamp(118px, 11vw, 154px)
+    clamp(22px, 6.6vw, 90px)
+    clamp(66px, 8vw, 104px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.14fr) minmax(340px, .86fr);
+  align-items: center;
+  gap: clamp(48px, 7vw, 112px);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 79% 46%, rgba(57,118,232,.045), transparent 24%),
+    #fcfcfa;
+}
+
+.about-page .about-hero-v2 .about-hero-copy {
+  position: relative;
+  z-index: 3;
+  max-width: 780px;
+}
+
+.about-page .about-hero-v2 .about-hero-kicker {
+  display: inline-block;
+  margin-bottom: clamp(24px, 3vw, 36px);
+}
+
+.about-page .about-hero-v2 .about-intro-title {
+  margin: 0;
+  max-width: 830px;
+  font: 800 clamp(4rem, 7.3vw, 7.7rem)/.91 Manrope, "Noto Sans JP", sans-serif;
+  letter-spacing: -.066em;
+  text-wrap: balance;
+}
+
+.about-page .about-hero-v2 .about-intro-title > span {
+  display: block;
+}
+
+.about-page .about-hero-v2 .about-intro-title > span:last-child {
+  white-space: nowrap;
+}
+
+.about-page .about-hero-v2 .about-bio-v2 {
+  max-width: 690px;
+  margin: clamp(22px, 2.6vw, 34px) 0 0;
+  color: #66707e;
+  font-size: clamp(1rem, 1.18vw, 1.12rem);
+  line-height: 1.72;
+}
+
+.about-page .about-hero-v2 .about-role-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 10px;
+  max-width: 720px;
+  margin-top: 25px;
+  color: #28384f;
+  font-size: clamp(.74rem, .82vw, .82rem);
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.about-page .about-hero-v2 .about-role-line span {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.about-page .about-hero-v2 .about-role-line i {
+  color: #aab0b8;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.about-page .about-hero-v2 .about-contact-line-v2 {
+  margin-top: 24px;
+  gap: 9px 20px;
+  color: #8b929b;
+  font-size: .75rem;
+}
+
+.about-page .about-hero-v2 .about-contact-line-v2 a {
+  position: relative;
+  color: #66707e;
+  transition: color .2s ease;
+}
+
+.about-page .about-hero-v2 .about-contact-line-v2 a:hover,
+.about-page .about-hero-v2 .about-contact-line-v2 a:focus-visible {
+  color: var(--blue);
+}
+
+.about-page .about-portrait-wrap-v2 {
+  position: relative;
+  z-index: 2;
+  min-height: 520px;
+  display: grid;
+  place-items: center;
+}
+
+.about-page .about-portrait-wrap-v2 .about-portrait-ring {
+  position: relative;
+  z-index: 2;
+  width: min(30vw, 410px);
+  min-width: 320px;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #e7f0ff;
+  box-shadow:
+    0 0 0 clamp(18px, 2.1vw, 30px) rgba(231,240,255,.7),
+    0 24px 64px rgba(37,77,139,.075);
+}
+
+.about-page .about-portrait-wrap-v2 .about-portrait,
+.about-page .about-portrait-wrap-v2 .about-portrait-placeholder {
+  width: 86%;
+  height: 86%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.about-page .about-portrait-wrap-v2 .about-portrait {
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+.about-page .about-portrait-wrap-v2 .about-portrait-placeholder {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+}
+
+.about-page .about-thats-me {
+  position: absolute;
+  z-index: 4;
+  left: -4%;
+  top: 16%;
+  width: clamp(115px, 11vw, 158px);
+  color: #3976e8;
+  transform: rotate(-4deg);
+  pointer-events: none;
+}
+
+.about-page .about-thats-me span {
+  display: block;
+  margin-left: -4px;
+  font: 600 clamp(1.35rem, 1.8vw, 1.9rem)/1 Caveat, Yomogi, cursive;
+  white-space: nowrap;
+}
+
+.about-page .about-thats-me svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 4px;
+  overflow: visible;
+}
+
+.about-page .about-thats-me path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.about-page .about-portrait-jp {
+  position: absolute;
+  z-index: 0;
+  right: -12%;
+  bottom: 2%;
+  color: rgba(57,118,232,.045);
+  font: 800 clamp(5.6rem, 9vw, 9rem)/.8 "Noto Sans JP", Manrope, sans-serif;
+  letter-spacing: -.08em;
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Editorial information strip below the hero. */
+.about-page .about-facts.about-facts-v2 {
+  margin: 0 clamp(22px, 6.6vw, 90px);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+}
+
+.about-page .about-facts-v2 > div {
+  position: relative;
+  min-width: 0;
+  padding: 29px clamp(18px, 2vw, 30px) 31px;
+  border-right: 1px solid var(--line);
+}
+
+.about-page .about-facts-v2 > div:first-child {
+  padding-left: 0;
+}
+
+.about-page .about-facts-v2 > div:last-child {
+  padding-right: 0;
+  border-right: 0;
+}
+
+.about-page .about-facts-v2 .about-fact-index {
+  display: block;
+  margin-bottom: 17px;
+  color: #a0a6af;
+  font: 700 .61rem/1 Manrope, sans-serif;
+  letter-spacing: .17em;
+}
+
+.about-page .about-facts-v2 small {
+  display: block;
+  color: var(--blue);
+  font-size: .66rem;
+  letter-spacing: .14em;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.about-page .about-facts-v2 p {
+  margin: 9px 0 0;
+  max-width: 420px;
+  color: #66707e;
+  font-size: clamp(.79rem, .87vw, .88rem);
+  line-height: 1.62;
+}
+
+/* Neutralize old About-only presentation without changing Home components. */
+.about-page .about-hero-v2 .about-headline,
+.about-page .about-hero-v2 .about-role-chips,
+.about-page .about-hero-v2 .about-stamp {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .about-page .about-hero.about-hero-v2 {
+    min-height: auto;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    padding-top: 106px;
+  }
+
+  .about-page .about-hero-v2 .about-hero-copy {
+    order: 1;
+  }
+
+  .about-page .about-portrait-wrap-v2 {
+    order: 2;
+    min-height: 390px;
+  }
+
+  .about-page .about-portrait-wrap-v2 .about-portrait-ring {
+    width: min(62vw, 370px);
+    min-width: 280px;
+  }
+
+  .about-page .about-thats-me {
+    left: max(2%, calc(50% - 235px));
+    top: 13%;
+  }
+
+  .about-page .about-portrait-jp {
+    right: 0;
+    bottom: 5%;
+  }
+
+  .about-page .about-facts.about-facts-v2 {
+    grid-template-columns: 1fr;
+  }
+
+  .about-page .about-facts-v2 > div,
+  .about-page .about-facts-v2 > div:first-child,
+  .about-page .about-facts-v2 > div:last-child {
+    padding: 22px 0 24px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .about-page .about-facts-v2 > div:last-child {
+    border-bottom: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .about-page .about-hero.about-hero-v2 {
+    padding:
+      94px
+      clamp(18px, 5vw, 24px)
+      56px;
+    gap: 38px;
+  }
+
+  .about-page .about-hero-v2 .about-hero-kicker {
+    margin-bottom: 21px;
+  }
+
+  .about-page .about-hero-v2 .about-intro-title {
+    font-size: clamp(3.2rem, 16.5vw, 5.3rem);
+    line-height: .91;
+  }
+
+  .about-page .about-hero-v2 .about-intro-title > span:last-child {
+    white-space: normal;
+  }
+
+  .about-page .about-hero-v2 .about-bio-v2 {
+    margin-top: 20px;
+    font-size: .96rem;
+    line-height: 1.68;
+  }
+
+  .about-page .about-hero-v2 .about-role-line {
+    margin-top: 19px;
+    gap: 4px 8px;
+    font-size: .7rem;
+  }
+
+  .about-page .about-hero-v2 .about-contact-line-v2 {
+    margin-top: 19px;
+    font-size: .69rem;
+  }
+
+  .about-page .about-portrait-wrap-v2 {
+    min-height: 330px;
+  }
+
+  .about-page .about-portrait-wrap-v2 .about-portrait-ring {
+    width: min(72vw, 315px);
+    min-width: 230px;
+  }
+
+  .about-page .about-thats-me {
+    left: 1%;
+    top: 12%;
+    width: 112px;
+  }
+
+  .about-page .about-thats-me span {
+    font-size: 1.34rem;
+  }
+
+  .about-page .about-portrait-jp {
+    right: -3%;
+    bottom: 8%;
+    font-size: clamp(4rem, 20vw, 6rem);
+  }
+
+  .about-page .about-facts.about-facts-v2 {
+    margin-inline: clamp(18px, 5vw, 24px);
+  }
+}
+
+/* ================================================================
+   PROFILE TOOLS — structured logo + context
+   ================================================================ */
+.tool-logo {
+  display: block;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  border-radius: 9px;
+  overflow: hidden;
+}
+
+.tool-logo-generic {
+  display: grid;
+  place-items: center;
+  background: #eef2f7;
+  border: 1px solid #dfe4eb;
+  color: #536174;
+  font: 800 .72rem/1 Manrope, sans-serif;
+  text-transform: uppercase;
+}
+
+/* About: tools get more room than the two text facts. */
+.about-page .about-facts.about-facts-v2 {
+  grid-template-columns: minmax(0, 1.7fr) minmax(180px, .62fr) minmax(0, .9fr);
+}
+
+.about-page .about-tools-fact {
+  min-width: 0;
+}
+
+.about-page .about-tool-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px 18px;
+  margin-top: 16px;
+}
+
+.about-page .about-tool-item {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  align-items: center;
+  gap: 11px;
+}
+
+.about-page .about-tool-item .tool-logo {
+  opacity: .7;
+  filter: grayscale(1);
+  transition: opacity .2s ease, filter .2s ease, transform .2s ease;
+}
+
+.about-page .about-tool-item:hover .tool-logo {
+  opacity: 1;
+  filter: none;
+  transform: translateY(-2px);
+}
+
+.about-page .about-tool-copy {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.about-page .about-tool-copy strong {
+  overflow: hidden;
+  color: #263448;
+  font: 750 .78rem/1.2 Manrope, sans-serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.about-page .about-tool-copy > span {
+  color: #8a929d;
+  font-size: .64rem;
+  line-height: 1.35;
+}
+
+/* Admin: structured tool CMS. */
+.admin-tool-manager {
+  display: grid;
+  gap: 16px;
+  margin-top: 4px;
+  padding-top: 24px;
+  border-top: 1px solid #e7e9ee;
+}
+
+.admin-tool-manager-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.admin-tool-manager-heading h3 {
+  margin: 7px 0 5px;
+  font: 800 clamp(1.35rem, 2vw, 1.9rem)/1 Manrope, sans-serif;
+  letter-spacing: -.035em;
+}
+
+.admin-tool-manager-heading p {
+  max-width: 600px;
+  margin: 0;
+  color: var(--muted);
+  font-size: .76rem;
+  line-height: 1.5;
+}
+
+.admin-tool-warning {
+  padding: 12px 14px;
+  border: 1px solid #f0d9aa;
+  border-radius: 13px;
+  background: #fff8e9;
+  color: #8a6421;
+  font-size: .76rem;
+  line-height: 1.5;
+}
+
+.admin-tool-warning code {
+  font-weight: 800;
+}
+
+.admin-tool-list {
+  display: grid;
+  gap: 12px;
+}
+
+.admin-tool-empty {
+  padding: 26px;
+  border: 1px dashed #dce1e8;
+  border-radius: 16px;
+  color: var(--muted);
+  text-align: center;
+  font-size: .8rem;
+}
+
+.admin-tool-row {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: start;
+  padding: 15px;
+  border: 1px solid #e2e6ec;
+  border-radius: 17px;
+  background: #fafbfc;
+}
+
+.admin-tool-logo-preview {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: white;
+  border: 1px solid #e4e7ed;
+}
+
+.admin-tool-logo-preview .tool-logo {
+  width: 38px;
+  height: 38px;
+}
+
+.admin-tool-fields {
+  min-width: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.admin-tool-fields .admin-translation-details {
+  background: white;
+}
+
+.admin-tool-actions {
+  display: grid;
+  justify-items: end;
+  gap: 13px;
+}
+
+.admin-tool-actions > div {
+  display: flex;
+  gap: 5px;
+}
+
+.admin-tool-actions button {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #dfe3ea;
+  border-radius: 9px;
+  background: white;
+  color: #536174;
+  cursor: pointer;
+}
+
+.admin-tool-actions button:disabled {
+  opacity: .3;
+  cursor: default;
+}
+
+.admin-tool-actions button.danger {
+  color: #b83e3e;
+}
+
+.admin-tool-active {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 7px !important;
+  color: #566274;
+  font-size: .7rem !important;
+}
+
+.admin-tool-active input {
+  width: 17px !important;
+  height: 17px;
+  accent-color: var(--blue);
+}
+
+@media (max-width: 900px) {
+  .about-page .about-facts.about-facts-v2 {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-tool-manager-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .admin-tool-row {
+    grid-template-columns: 44px minmax(0, 1fr);
+  }
+
+  .admin-tool-logo-preview {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+  }
+
+  .admin-tool-logo-preview .tool-logo {
+    width: 34px;
+    height: 34px;
+  }
+
+  .admin-tool-actions {
+    grid-column: 1 / -1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 560px) {
+  .about-page .about-tool-list {
+    grid-template-columns: 1fr;
+  }
+
+  .about-page .about-tool-item .tool-logo {
+    opacity: .92;
+    filter: none;
+  }
+
+  .admin-tool-row {
+    padding: 12px;
+    gap: 10px;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .about-page .about-tool-item .tool-logo {
+    opacity: .92;
+    filter: none;
+  }
+}
+

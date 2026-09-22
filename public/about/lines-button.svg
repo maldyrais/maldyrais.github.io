@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="40" viewBox="0 0 80 40" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Dua garis samping tombol</title>
+  <desc id="desc">Digambar ulang dari awal sebagai elemen vektor terpisah. Latar transparan.</desc>
+  <path d="M15 29L34 30M52 8L62 22" stroke="#4A94FF" stroke-width="6.4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

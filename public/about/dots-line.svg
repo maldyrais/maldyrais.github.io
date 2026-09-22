@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="70" viewBox="0 0 120 70" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Titik tiga dan garis</title>
+  <desc id="desc">Digambar ulang dari awal sebagai elemen vektor terpisah. Latar transparan.</desc>
+  <g fill="#2873C7"><circle cx="46" cy="20" r="3.3"/><circle cx="60" cy="16.5" r="3.3"/><circle cx="74" cy="13" r="3.3"/></g><path d="M16 59Q56 42 104 38" stroke="#4A94FF" stroke-width="6.2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

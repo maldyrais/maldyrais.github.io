@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Bidang — kamera</title>
+  <desc id="desc">Digambar ulang dari awal sebagai elemen vektor terpisah. Latar transparan.</desc>
+  <g stroke="#2873C7" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18H21L25 12H39L43 18H50Q56 18 56 24V48Q56 54 50 54H14Q8 54 8 48V24Q8 18 14 18Z"/><circle cx="32" cy="35" r="10"/></g><circle cx="48" cy="25" r="2.2" fill="#2873C7"/>
+</svg>

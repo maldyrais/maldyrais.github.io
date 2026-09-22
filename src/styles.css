@@ -1,0 +1,15 @@
+/*
+ * Global stylesheet entry point.
+ *
+ * Keep these imports in order: later modules intentionally refine and
+ * override earlier rules. The split is organizational only and preserves
+ * the original cascade.
+ */
+@import './styles/01-foundation.css';
+@import './styles/02-pages-and-admin.css';
+@import './styles/03-responsive-and-home.css';
+@import './styles/04-interactions-and-modals.css';
+@import './styles/05-showcase-and-more-about.css';
+@import './styles/06-about-and-profile.css';
+@import './styles/07-status-and-admin.css';
+@import './styles/08-loading-and-motion.css';

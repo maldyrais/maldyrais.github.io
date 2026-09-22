@@ -1,0 +1,1267 @@
+/* ================================================================
+   LANGUAGE SWITCH — VIEW TRANSITION
+   Subtle page crossfade/slide when ID / EN / 日本語 changes.
+   ================================================================ */
+::view-transition-group(root) {
+  animation-duration: .34s;
+  animation-timing-function: cubic-bezier(.22,.72,.2,1);
+}
+
+::view-transition-old(root) {
+  animation: language-view-out .16s ease both;
+}
+
+::view-transition-new(root) {
+  animation: language-view-in .30s cubic-bezier(.22,.72,.2,1) both;
+}
+
+@keyframes language-view-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+    filter: blur(2px);
+  }
+}
+
+@keyframes language-view-in {
+  from {
+    opacity: 0;
+    transform: translateY(7px);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(root),
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}
+
+/* ================================================================
+   GLOBAL — SERVICE FLOAT V4
+   3 explicit artwork states:
+   idle-1 <-> idle-2, then open artwork while panel is visible.
+   ================================================================ */
+
+.service-float-shell {
+  position: fixed;
+  z-index: 145;
+  right: clamp(18px, 2.8vw, 38px);
+  bottom: clamp(18px, 2.8vw, 32px);
+  width: 92px;
+  height: 110px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(18px) scale(.92);
+  transition:
+    opacity .3s ease,
+    visibility .3s ease,
+    transform .42s cubic-bezier(.2,.82,.2,1);
+}
+
+.service-float-shell.is-discovered {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.service-float-trigger {
+  position: absolute;
+  z-index: 3;
+  right: 0;
+  bottom: 0;
+  width: 92px;
+  height: 110px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  filter: drop-shadow(0 12px 18px rgba(31,64,112,.17));
+  transition: transform .25s ease, filter .25s ease;
+}
+
+.service-float-trigger:hover,
+.service-float-trigger:focus-visible,
+.service-float-shell.is-open .service-float-trigger {
+  transform: translateY(-4px) scale(1.035);
+  filter: drop-shadow(0 16px 24px rgba(31,64,112,.24));
+}
+
+.service-float-trigger:focus-visible {
+  outline: 3px solid rgba(57,118,232,.25);
+  outline-offset: 4px;
+  border-radius: 22px;
+}
+
+.service-float-visual {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 84%;
+  animation: service-float-bob 3.8s ease-in-out infinite;
+}
+
+.service-float-art-stack {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.service-float-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  transition:
+    opacity .24s ease,
+    transform .32s cubic-bezier(.2,.82,.2,1);
+}
+
+.service-float-art-idle {
+  opacity: 0;
+  transform: translateY(2px) scale(.985);
+}
+
+/* State idle 1: tampil di setengah siklus pertama */
+.service-float-art-idle-1 {
+  animation: service-idle-one 4.8s steps(1, end) infinite;
+}
+
+/* State idle 2: tampil di setengah siklus kedua */
+.service-float-art-idle-2 {
+  animation: service-idle-two 4.8s steps(1, end) infinite;
+}
+
+.service-float-art-open {
+  opacity: 0;
+  transform: translateY(6px) scale(.94);
+}
+
+/* Saat panel terbuka, idle berhenti dan artwork OPEN mengambil alih */
+.service-float-shell.is-open .service-float-art-idle {
+  animation-play-state: paused;
+  opacity: 0 !important;
+  transform: translateY(5px) scale(.94);
+}
+
+.service-float-shell.is-open .service-float-art-open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.service-float-shell.is-open .service-float-visual {
+  animation-play-state: paused;
+}
+
+@keyframes service-idle-one {
+  0%, 49.999% { opacity: 1; transform: translateY(0) scale(1); }
+  50%, 100% { opacity: 0; transform: translateY(2px) scale(.985); }
+}
+
+@keyframes service-idle-two {
+  0%, 49.999% { opacity: 0; transform: translateY(2px) scale(.985); }
+  50%, 100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Gerakan kedua saat idle: seluruh widget bob naik-turun */
+@keyframes service-float-bob {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-7px) rotate(1.2deg); }
+}
+
+.service-float-mini-label {
+  position: absolute;
+  z-index: 4;
+  right: 2px;
+  bottom: 0;
+  min-width: 44px;
+  padding: 5px 7px;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  background: #171717;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,.16);
+  font: 800 .57rem/1 Manrope, sans-serif;
+  letter-spacing: .09em;
+  text-align: center;
+  transform: rotate(-3deg);
+  transition: background-color .2s ease, transform .2s ease;
+}
+
+.service-float-mini-label.is-open {
+  background: var(--blue);
+  transform: rotate(0deg) translateY(-2px);
+}
+
+.service-float-panel {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: calc(100% + 14px);
+  width: min(410px, calc(100vw - 36px));
+  padding: 24px;
+  border: 1px solid rgba(57,118,232,.16);
+  border-radius: 26px;
+  background: rgba(255,255,255,.96);
+  color: #171717;
+  box-shadow: 0 28px 90px rgba(23,42,74,.2);
+  backdrop-filter: blur(18px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(18px) scale(.965);
+  transform-origin: right bottom;
+  transition:
+    opacity .32s ease,
+    visibility .32s ease,
+    transform .4s cubic-bezier(.2,.82,.2,1);
+}
+
+.service-float-shell.is-open .service-float-panel {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.service-float-panel::after {
+  content: "";
+  position: absolute;
+  right: 31px;
+  bottom: -8px;
+  width: 16px;
+  height: 16px;
+  border-right: 1px solid rgba(57,118,232,.16);
+  border-bottom: 1px solid rgba(57,118,232,.16);
+  background: rgba(255,255,255,.96);
+  transform: rotate(45deg);
+}
+
+.service-float-close {
+  position: absolute;
+  z-index: 2;
+  top: 13px;
+  right: 13px;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: #f0f3f7;
+  color: #626c79;
+  cursor: pointer;
+  font-size: 1.35rem;
+  line-height: 1;
+  transition: background-color .18s ease, transform .18s ease;
+}
+
+.service-float-close:hover {
+  background: #e7ebf1;
+  transform: rotate(5deg);
+}
+
+.service-float-kicker {
+  padding-right: 42px;
+  color: var(--blue);
+  font-size: .66rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+}
+
+.service-float-panel h3 {
+  max-width: 330px;
+  margin: 12px 0 10px;
+  font: 800 clamp(1.75rem, 2.6vw, 2.45rem)/.98 Manrope, "Noto Sans JP", sans-serif;
+  letter-spacing: -.05em;
+}
+
+.service-float-panel > p {
+  margin: 0;
+  color: #707986;
+  font-size: .88rem;
+  line-height: 1.55;
+}
+
+.service-float-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 18px;
+}
+
+.service-float-tags span {
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: #edf3ff;
+  color: #3568c9;
+  font-size: .69rem;
+  font-weight: 700;
+}
+
+.service-float-cta {
+  display: inline-flex;
+  margin-top: 20px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid currentColor;
+  color: #171717;
+  font-size: .82rem;
+  font-weight: 800;
+}
+
+@media (max-width: 850px) {
+  .service-float-shell {
+    right: 14px;
+    bottom: 16px;
+    width: 78px;
+    height: 94px;
+  }
+
+  .service-float-trigger {
+    width: 78px;
+    height: 94px;
+  }
+
+  .service-float-panel {
+    position: fixed;
+    right: 14px;
+    bottom: 118px;
+    width: min(410px, calc(100vw - 28px));
+    padding: 21px;
+    border-radius: 23px;
+    transform-origin: right bottom;
+  }
+
+  .service-float-panel::after {
+    right: 27px;
+  }
+
+  .service-float-mini-label {
+    right: 0;
+    min-width: 39px;
+    font-size: .52rem;
+  }
+}
+
+@media (max-height: 620px) and (min-width: 851px) {
+  .service-float-panel {
+    max-height: calc(100vh - 146px);
+    overflow-y: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-float-shell,
+  .service-float-trigger,
+  .service-float-panel,
+  .service-float-visual,
+  .service-float-art-idle-1,
+  .service-float-art-idle-2 {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .service-float-art-idle-1 {
+    opacity: 1;
+    transform: none;
+  }
+
+  .service-float-art-idle-2 {
+    opacity: 0;
+  }
+
+  .service-float-shell.is-open .service-float-art-idle-1 {
+    opacity: 0 !important;
+  }
+
+  .service-float-shell.is-open .service-float-art-open {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ================================================================
+   WORK MODAL — MEDIA POLISH V2
+   Keeps artwork uncropped, removes accidental white gaps,
+   centers mobile modal, and supports 2D scrolling for wide/tall art.
+   ================================================================ */
+
+.modal-backdrop.work-modal-layer {
+  place-items: center;
+  overflow: auto;
+  padding: clamp(14px, 2.2vw, 24px);
+}
+
+.work-modal {
+  max-height: calc(100dvh - 48px);
+}
+
+.modal-media-pane {
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.54), rgba(255,255,255,.14)),
+    #e8edf3;
+  box-shadow: inset -1px 0 0 rgba(23,23,23,.045);
+}
+
+.modal-image-scroll {
+  display: grid;
+  place-items: center;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(23,23,23,.24) transparent;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255,255,255,.56), transparent 44%),
+    #e8edf3;
+}
+
+.modal-image-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.modal-image-scroll::-webkit-scrollbar-thumb {
+  background: rgba(23,23,23,.22);
+  border-radius: 999px;
+}
+
+.modal-image-scroll::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Normal artwork: always show the whole piece without cropping. */
+.modal-image-scroll.media-standard img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+/* Very wide artwork: scale from the pane height and allow side scrolling. */
+.modal-image-scroll.media-panorama {
+  place-items: center start;
+  overflow-x: auto;
+  overflow-y: hidden;
+  cursor: ew-resize;
+}
+
+.modal-image-scroll.media-panorama img {
+  width: auto;
+  height: 100%;
+  max-width: none;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: left center;
+}
+
+/* Very tall artwork: use full pane width and let the preview scroll vertically. */
+.modal-image-scroll.media-tall {
+  place-items: start center;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.modal-image-scroll.media-tall img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  max-height: none;
+  object-fit: contain;
+  object-position: top center;
+}
+
+/* Fullscreen viewer scrolls in BOTH directions when the media exceeds the viewport. */
+.image-viewer-scroll {
+  overflow: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-x pan-y pinch-zoom;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,.28) transparent;
+}
+
+.image-viewer-scroll::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+.image-viewer-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,.25);
+  border-radius: 999px;
+}
+
+.image-viewer-scroll::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.image-viewer-scroll img {
+  max-width: none;
+  max-height: none;
+  margin-inline: auto;
+  object-fit: contain;
+}
+
+/* WorkModal now supplies the zoom width inline.
+   These selectors neutralize the older width rules above. */
+.image-viewer-scroll.zoom-0 img,
+.image-viewer-scroll.zoom-1 img,
+.image-viewer-scroll.zoom-2 img {
+  max-width: none;
+}
+
+/* Wide artwork uses a viewport-height based width in WorkModal.jsx,
+   so panoramic files are genuinely pannable left/right instead of shrinking
+   until all detail becomes unreadable. */
+.image-viewer-scroll.media-panorama {
+  text-align: left;
+}
+
+/* Mobile / tablet portrait */
+@media (max-width: 850px) {
+  .modal-backdrop.work-modal-layer {
+    padding: 12px;
+  }
+
+  .work-modal {
+    width: min(94vw, 680px);
+    height: auto;
+    max-height: calc(100dvh - 24px);
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, auto);
+    align-self: center;
+    justify-self: center;
+    border-radius: 22px;
+  }
+
+  .modal-media-pane {
+    width: 100%;
+    min-height: 170px;
+    height: auto;
+    max-height: 52dvh;
+    aspect-ratio: var(--work-media-ratio, 4 / 3);
+    box-shadow: inset 0 -1px 0 rgba(23,23,23,.045);
+  }
+
+  .work-modal.media-tall .modal-media-pane {
+    height: 52dvh;
+    aspect-ratio: auto;
+  }
+
+  .work-modal.media-panorama .modal-media-pane {
+    min-height: 150px;
+    max-height: 40dvh;
+  }
+
+  .modal-content {
+    align-self: stretch;
+    max-height: 36dvh;
+    padding: 22px 22px 24px;
+    overflow-y: auto;
+  }
+
+  .modal-content h3 {
+    margin-top: 9px;
+    margin-bottom: 12px;
+    font-size: clamp(1.65rem, 7.8vw, 2.6rem);
+  }
+
+  .modal-content p {
+    margin-block: 0;
+    line-height: 1.55;
+  }
+
+  .tool-list {
+    margin-top: 18px;
+  }
+
+  .view-image-button {
+    left: 12px;
+    bottom: 12px;
+    padding: 9px 13px;
+    font-size: .78rem;
+  }
+
+  .modal-close {
+    top: 10px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .image-viewer-scroll {
+    padding: 12px;
+  }
+
+  /* Inline width from WorkModal.jsx wins over the old mobile width rules. */
+  .image-viewer-scroll.zoom-0 img,
+  .image-viewer-scroll.zoom-1 img,
+  .image-viewer-scroll.zoom-2 img {
+    max-width: none;
+  }
+}
+
+@media (max-width: 460px) {
+  .work-modal {
+    width: calc(100vw - 20px);
+    max-height: calc(100dvh - 20px);
+    border-radius: 19px;
+  }
+
+  .modal-content {
+    max-height: 34dvh;
+    padding: 18px 18px 20px;
+  }
+
+  .work-meta {
+    font-size: .72rem;
+  }
+
+  .modal-content p {
+    font-size: .84rem;
+  }
+}
+
+@media (max-height: 560px) and (max-width: 850px) {
+  .work-modal {
+    grid-template-columns: minmax(0, 1.05fr) minmax(220px, .95fr);
+    grid-template-rows: 1fr;
+    width: min(94vw, 760px);
+    height: min(88dvh, 470px);
+  }
+
+  .modal-media-pane {
+    height: 100%;
+    max-height: none;
+    aspect-ratio: auto;
+  }
+
+  .modal-content {
+    max-height: 100%;
+    padding: 18px;
+  }
+}
+
+/* ================================================================
+   ADMIN — WORK MEDIA / CAROUSEL V2
+   ================================================================ */
+
+.work-editor-v2 {
+  width: min(900px, 100vw);
+}
+
+.admin-cover-section,
+.admin-media-section {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid #e3e7ef;
+  border-radius: 20px;
+  background: #fafbfc;
+}
+
+.admin-media-section {
+  gap: 16px;
+}
+
+.admin-media-section-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.admin-media-section-heading > div {
+  display: grid;
+  gap: 5px;
+}
+
+.admin-media-section-heading strong {
+  font: 800 1rem/1.15 Manrope, sans-serif;
+}
+
+.admin-media-section-heading small {
+  max-width: 570px;
+  color: var(--muted);
+  font-size: .74rem;
+  line-height: 1.5;
+}
+
+.admin-media-count {
+  flex: 0 0 auto;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: var(--soft-blue);
+  color: var(--blue);
+  font-size: .69rem;
+  font-weight: 800;
+}
+
+.admin-image-preview.contain {
+  padding: 10px;
+}
+
+.admin-image-preview.contain img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.admin-media-add {
+  position: relative;
+  width: fit-content;
+  display: inline-flex !important;
+  cursor: pointer;
+}
+
+.admin-media-add input {
+  position: absolute;
+  width: 1px !important;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.admin-media-add > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  border: 1px dashed #bfc9d8;
+  border-radius: 12px;
+  background: #fff;
+  color: #34445b;
+  font-size: .76rem;
+  font-weight: 800;
+  transition: border-color .18s ease, color .18s ease, transform .18s ease;
+}
+
+.admin-media-add:hover > span {
+  border-color: var(--blue);
+  color: var(--blue);
+  transform: translateY(-1px);
+}
+
+.admin-media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(138px, 1fr));
+  gap: 12px;
+}
+
+.admin-media-item {
+  min-width: 0;
+  padding: 8px;
+  border: 1px solid #e1e6ee;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.admin-media-thumb {
+  position: relative;
+  height: 126px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  background: #eef1f5;
+}
+
+.admin-media-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.admin-media-thumb > span {
+  position: absolute;
+  left: 7px;
+  top: 7px;
+  min-width: 25px;
+  height: 25px;
+  display: grid;
+  place-items: center;
+  padding-inline: 6px;
+  border-radius: 999px;
+  background: rgba(23,23,23,.82);
+  color: #fff;
+  font-size: .65rem;
+  font-weight: 800;
+  backdrop-filter: blur(8px);
+}
+
+.admin-media-item-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  margin-top: 8px;
+}
+
+.admin-media-item-actions button {
+  min-height: 32px;
+  border: 1px solid #e0e5ed;
+  border-radius: 9px;
+  background: #f7f8fa;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.admin-media-item-actions button:hover:not(:disabled) {
+  border-color: #c5d2e6;
+  background: #edf3ff;
+  color: var(--blue);
+}
+
+.admin-media-item-actions button:disabled {
+  opacity: .3;
+  cursor: default;
+}
+
+.admin-media-item-actions button.danger:hover:not(:disabled) {
+  border-color: #f0c5c5;
+  background: #fff0f0;
+  color: #b03a3a;
+}
+
+.admin-media-empty,
+.admin-media-state {
+  padding: 15px;
+  border-radius: 13px;
+  background: #f0f3f7;
+  color: var(--muted);
+  font-size: .78rem;
+  line-height: 1.5;
+}
+
+.admin-media-state.error {
+  background: #fff0f0;
+  color: #a83232;
+}
+
+@media (max-width: 650px) {
+  .admin-cover-section,
+  .admin-media-section {
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .admin-media-section-heading {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .admin-media-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+
+  .admin-media-thumb {
+    height: 112px;
+  }
+
+  .admin-media-count {
+    align-self: flex-start;
+  }
+}
+
+/* ================================================================
+   WORK MODAL — CAROUSEL V3
+   Cover = slide 1, work_media = following slides.
+   Also removes the remaining desktop letterbox strip for standard media.
+   ================================================================ */
+
+.work-carousel {
+  isolation: isolate;
+}
+
+.work-carousel-arrow {
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.64);
+  border-radius: 50%;
+  background: rgba(255,255,255,.88);
+  color: #171717;
+  box-shadow: 0 10px 28px rgba(20,31,48,.16);
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 800;
+  transform: translateY(-50%);
+  transition:
+    transform .2s ease,
+    background-color .2s ease,
+    box-shadow .2s ease;
+}
+
+.work-carousel-arrow:hover {
+  background: #fff;
+  transform: translateY(-50%) scale(1.06);
+  box-shadow: 0 14px 34px rgba(20,31,48,.22);
+}
+
+.work-carousel-prev { left: 16px; }
+.work-carousel-next { right: 16px; }
+
+.work-carousel-status {
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: calc(100% - 230px);
+  padding: 7px 10px;
+  border: 1px solid rgba(255,255,255,.55);
+  border-radius: 999px;
+  background: rgba(23,23,23,.58);
+  color: #fff;
+  box-shadow: 0 7px 22px rgba(0,0,0,.14);
+  backdrop-filter: blur(12px);
+  transform: translateX(-50%);
+}
+
+.work-carousel-status > span {
+  flex: 0 0 auto;
+  font-size: .66rem;
+  font-weight: 800;
+  letter-spacing: .03em;
+}
+
+.work-carousel-dots {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow: hidden;
+}
+
+.work-carousel-dots button {
+  width: 6px;
+  height: 6px;
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 999px;
+  padding: 0;
+  background: rgba(255,255,255,.38);
+  cursor: pointer;
+  transition: width .2s ease, background-color .2s ease;
+}
+
+.work-carousel-dots button.active {
+  width: 17px;
+  background: #fff;
+}
+
+.work-carousel-loading {
+  position: absolute;
+  z-index: 6;
+  right: 18px;
+  top: 18px;
+  min-width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,.9);
+  color: var(--blue);
+  box-shadow: 0 6px 18px rgba(0,0,0,.1);
+  font-weight: 800;
+}
+
+.image-viewer-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.image-viewer-counter {
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.08);
+  color: rgba(255,255,255,.7);
+  font-size: .68rem;
+  font-weight: 700;
+}
+
+@media (max-width: 850px) {
+  .work-carousel-arrow {
+    width: 36px;
+    height: 36px;
+    opacity: .94;
+  }
+
+  .work-carousel-prev { left: 10px; }
+  .work-carousel-next { right: 10px; }
+
+  .work-carousel-status {
+    bottom: 11px;
+    max-width: calc(100% - 170px);
+    gap: 7px;
+    padding: 6px 8px;
+  }
+
+  .work-carousel-status > span {
+    font-size: .61rem;
+  }
+
+  .work-carousel-dots button {
+    width: 5px;
+    height: 5px;
+  }
+
+  .work-carousel-dots button.active {
+    width: 14px;
+  }
+
+  /* Touch devices already support swipe; arrows remain as a clear fallback. */
+  .work-carousel {
+    touch-action: pan-y;
+  }
+
+  .image-viewer-scroll {
+    touch-action: pan-x pan-y pinch-zoom;
+  }
+}
+
+@media (max-width: 460px) {
+  .work-carousel-arrow {
+    width: 32px;
+    height: 32px;
+    font-size: .88rem;
+  }
+
+  .work-carousel-status {
+    max-width: calc(100% - 148px);
+  }
+
+  .image-viewer-actions {
+    gap: 5px;
+  }
+
+  .image-viewer-actions button {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .work-carousel-arrow:hover {
+    transform: translateY(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-carousel-arrow,
+  .work-carousel-dots button {
+    transition: none !important;
+  }
+}
+
+/* ================================================================
+   WORK MODAL — MEDIA DISPLAY V6
+   One predictable rule:
+   - normal photo -> fully visible, no crop
+   - truly wide -> horizontal scroll
+   - truly tall -> vertical scroll
+   Letterbox area uses a blurred image instead of white.
+   ================================================================ */
+
+.modal-media-pane {
+  isolation: isolate;
+  background: #e8edf3;
+}
+
+.modal-image-backdrop {
+  position: absolute;
+  z-index: 0;
+  inset: -30px;
+  width: calc(100% + 60px);
+  height: calc(100% + 60px);
+  object-fit: cover;
+  object-position: center;
+  filter: blur(30px) saturate(.82);
+  opacity: .25;
+  transform: scale(1.05);
+  pointer-events: none;
+  user-select: none;
+}
+
+.modal-image-scroll {
+  position: relative;
+  z-index: 1;
+  background: rgba(238,243,248,.66);
+}
+
+/* Mobile/tablet keep the already-good behavior. */
+.modal-image-scroll.media-standard {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.modal-image-scroll.media-standard img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.modal-image-scroll.media-panorama {
+  display: grid;
+  place-items: center start;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.modal-image-scroll.media-panorama img {
+  display: block;
+  width: auto;
+  height: 100%;
+  max-width: none;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.modal-image-scroll.media-tall {
+  display: grid;
+  place-items: start center;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.modal-image-scroll.media-tall img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  max-height: none;
+  object-fit: contain;
+  object-position: top center;
+}
+
+@media (min-width: 851px) {
+  /* IMPORTANT:
+     Desktop mode is calculated against the ACTUAL media frame.
+     A normal landscape photo therefore stays fully visible instead of
+     suddenly becoming a horizontal-scroll crop. */
+
+  .work-modal .modal-image-scroll.desktop-contain {
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+
+  .work-modal .modal-image-scroll.desktop-contain img {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  /* Significantly wider than frame -> readable height + side scroll. */
+  .work-modal .modal-image-scroll.desktop-x {
+    display: grid;
+    place-items: center start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-gutter: stable;
+    cursor: ew-resize;
+  }
+
+  .work-modal .modal-image-scroll.desktop-x img {
+    width: auto;
+    height: 100%;
+    min-width: 100%;
+    max-width: none;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: left center;
+  }
+
+  /* Significantly taller than frame -> readable width + down scroll. */
+  .work-modal .modal-image-scroll.desktop-y {
+    display: grid;
+    place-items: start center;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+  }
+
+  .work-modal .modal-image-scroll.desktop-y img {
+    width: 100%;
+    height: auto;
+    min-height: 100%;
+    max-width: 100%;
+    max-height: none;
+    object-fit: contain;
+    object-position: top center;
+  }
+
+  .work-modal .modal-image-scroll::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  .work-modal .modal-image-scroll::-webkit-scrollbar-track {
+    background: rgba(23,23,23,.055);
+  }
+
+  .work-modal .modal-image-scroll::-webkit-scrollbar-thumb {
+    background: rgba(23,23,23,.3);
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background-clip: padding-box;
+  }
+
+  .work-modal .modal-image-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(23,23,23,.44);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+}
+
+.work-carousel-arrow,
+.work-carousel-status,
+.view-image-button,
+.work-carousel-loading {
+  z-index: 6;
+}
+
+/* Fullscreen viewer remains intentionally unrestricted:
+   zoom can create both horizontal + vertical overflow. */
+.image-viewer-scroll {
+  overflow: auto;
+  touch-action: pan-x pan-y pinch-zoom;
+}
+
+
