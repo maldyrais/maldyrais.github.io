@@ -20,6 +20,8 @@ import { usePublicProfile } from '../hooks/usePublicProfile'
 
 const SITE_URL = 'https://maldyrais.github.io'
 const PERSON_ID = `${SITE_URL}/#person`
+const PERSON_NAME = 'Muhammad Maldy Rais Ramadhan'
+const PERSON_PUBLIC_NAME = 'Maldy Rais'
 const DEFAULT_SOCIAL_IMAGE = `${SITE_URL}/about/about-portrait.png`
 const NIHONGO_URL = `${SITE_URL}/Nihongo-gakushu/`
 
@@ -39,29 +41,29 @@ const SEO = {
   '/': {
     id: {
       title: 'Maldy Rais — Tutor Bahasa Jepang & Kreator Visual',
-      description: 'Portfolio Maldy Rais, tutor bahasa Jepang dan kreator visual yang berkarya dalam desain, fotografi, serta pengalaman web interaktif.',
+      description: 'Portofolio resmi Muhammad Maldy Rais Ramadhan, dikenal sebagai Maldy Rais, tutor bahasa Jepang dan kreator visual dalam desain, fotografi, serta web interaktif.',
     },
     en: {
       title: 'Maldy Rais — Japanese Tutor & Visual Creator',
-      description: 'Portfolio of Maldy Rais, a Japanese language tutor and visual creator working across design, photography, and interactive web experiences.',
+      description: 'Official portfolio of Muhammad Maldy Rais Ramadhan, professionally known as Maldy Rais, a Japanese language tutor and visual creator.',
     },
     ja: {
       title: 'Maldy Rais — 日本語チューター・ビジュアルクリエイター',
-      description: '日本語教育、デザイン、写真、インタラクティブWeb制作に取り組むMaldy Raisのポートフォリオ。',
+      description: 'Muhammad Maldy Rais Ramadhan（Maldy Rais）の公式ポートフォリオ。日本語教育、デザイン、写真、インタラクティブWeb制作に取り組んでいます。',
     },
   },
   '/about': {
     id: {
-      title: 'Tentang Maldy Rais — Tutor Bahasa Jepang & Kreator Visual',
-      description: 'Kenali Maldy Rais lebih jauh: perjalanan, pengalaman, minat, dan karya di bidang bahasa Jepang, desain, fotografi, serta web interaktif.',
+      title: 'Muhammad Maldy Rais Ramadhan (Maldy Rais) — Tentang Saya',
+      description: 'Muhammad Maldy Rais Ramadhan, dikenal secara profesional sebagai Maldy Rais, adalah tutor bahasa Jepang, mahasiswa Sastra Jepang, dan kreator visual.',
     },
     en: {
-      title: 'About Maldy Rais — Japanese Tutor & Visual Creator',
-      description: 'Learn more about Maldy Rais, his experience, interests, and work across Japanese language education, design, photography, and interactive web.',
+      title: 'About Muhammad Maldy Rais Ramadhan (Maldy Rais)',
+      description: 'Muhammad Maldy Rais Ramadhan, professionally known as Maldy Rais, is a Japanese language tutor, Japanese language and literature student, and visual creator.',
     },
     ja: {
-      title: 'Maldy Raisについて — 日本語・デザイン・写真・Web',
-      description: 'Maldy Raisの経験、興味、活動について。日本語教育、デザイン、写真、インタラクティブWebの分野で活動しています。',
+      title: 'Muhammad Maldy Rais Ramadhan（Maldy Rais）について',
+      description: 'Muhammad Maldy Rais Ramadhan（Maldy Rais）は、日本語チューター、日本語・日本文学を学ぶ学生、ビジュアルクリエイターです。',
     },
   },
   '/works': {
@@ -244,7 +246,8 @@ function personSchema(copy, profile, language) {
   const person = {
     '@type': 'Person',
     '@id': PERSON_ID,
-    name: profile?.name || 'Maldy Rais',
+    name: PERSON_NAME,
+    alternateName: PERSON_PUBLIC_NAME,
     url: `${SITE_URL}/id/about/`,
     description: copy.description,
     image: profileImage || DEFAULT_SOCIAL_IMAGE,
@@ -579,10 +582,10 @@ export default function SeoManager() {
 
       document.title = copy.title
       ensureMeta('meta[name="description"]', { name: 'description', content: copy.description })
-      ensureMeta('meta[name="author"]', { name: 'author', content: 'Maldy Rais' })
+      ensureMeta('meta[name="author"]', { name: 'author', content: PERSON_NAME })
       ensureMeta('meta[name="robots"]', { name: 'robots', content: 'index, follow, max-image-preview:large' })
       ensureMeta('meta[property="og:type"]', { property: 'og:type', content: 'website' })
-      ensureMeta('meta[property="og:site_name"]', { property: 'og:site_name', content: 'Maldy Rais' })
+      ensureMeta('meta[property="og:site_name"]', { property: 'og:site_name', content: PERSON_PUBLIC_NAME })
       ensureMeta('meta[property="og:title"]', { property: 'og:title', content: copy.title })
       ensureMeta('meta[property="og:description"]', { property: 'og:description', content: copy.description })
       ensureMeta('meta[property="og:url"]', { property: 'og:url', content: canonical })
@@ -626,10 +629,10 @@ export default function SeoManager() {
 
       document.title = copy.title
       ensureMeta('meta[name="description"]', { name: 'description', content: copy.description })
-      ensureMeta('meta[name="author"]', { name: 'author', content: 'Maldy Rais' })
+      ensureMeta('meta[name="author"]', { name: 'author', content: PERSON_NAME })
       ensureMeta('meta[name="robots"]', { name: 'robots', content: 'index, follow, max-image-preview:large' })
       ensureMeta('meta[property="og:type"]', { property: 'og:type', content: 'profile' })
-      ensureMeta('meta[property="og:site_name"]', { property: 'og:site_name', content: 'Maldy Rais' })
+      ensureMeta('meta[property="og:site_name"]', { property: 'og:site_name', content: PERSON_PUBLIC_NAME })
       ensureMeta('meta[property="og:title"]', { property: 'og:title', content: copy.title })
       ensureMeta('meta[property="og:description"]', { property: 'og:description', content: copy.description })
       ensureMeta('meta[property="og:url"]', { property: 'og:url', content: canonical })
@@ -664,14 +667,14 @@ export default function SeoManager() {
     document.title = copy.title
 
     ensureMeta('meta[name="description"]', { name: 'description', content: copy.description })
-    ensureMeta('meta[name="author"]', { name: 'author', content: 'Maldy Rais' })
+    ensureMeta('meta[name="author"]', { name: 'author', content: PERSON_NAME })
     ensureMeta('meta[name="robots"]', {
       name: 'robots',
       content: isRedirectPage ? 'noindex, follow' : 'index, follow, max-image-preview:large',
     })
 
     ensureMeta('meta[property="og:type"]', { property: 'og:type', content: contentPath === '/about' ? 'profile' : 'website' })
-    ensureMeta('meta[property="og:site_name"]', { property: 'og:site_name', content: 'Maldy Rais' })
+    ensureMeta('meta[property="og:site_name"]', { property: 'og:site_name', content: PERSON_PUBLIC_NAME })
     ensureMeta('meta[property="og:title"]', { property: 'og:title', content: copy.title })
     ensureMeta('meta[property="og:description"]', { property: 'og:description', content: copy.description })
     ensureMeta('meta[property="og:url"]', { property: 'og:url', content: canonical })
@@ -679,7 +682,7 @@ export default function SeoManager() {
     ensureMeta('meta[property="og:image"]', { property: 'og:image', content: DEFAULT_SOCIAL_IMAGE })
     ensureMeta('meta[property="og:image:width"]', { property: 'og:image:width', content: '1254' })
     ensureMeta('meta[property="og:image:height"]', { property: 'og:image:height', content: '1254' })
-    ensureMeta('meta[property="og:image:alt"]', { property: 'og:image:alt', content: 'Maldy Rais' })
+    ensureMeta('meta[property="og:image:alt"]', { property: 'og:image:alt', content: PERSON_PUBLIC_NAME })
 
     ensureMeta('meta[name="twitter:card"]', { name: 'twitter:card', content: 'summary_large_image' })
     ensureMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: copy.title })

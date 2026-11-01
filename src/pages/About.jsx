@@ -27,6 +27,12 @@ const FALLBACK_PROFILE = {
   interests: ['Graphic Design', 'Japanese Language', 'Photography', 'Interactive Web'],
 }
 
+const ABOUT_ENTITY_INTRO = {
+  id: 'Muhammad Maldy Rais Ramadhan, dikenal secara profesional sebagai Maldy Rais, adalah tutor bahasa Jepang, mahasiswa Sastra Jepang, dan kreator visual yang berkarya di bidang pendidikan, desain, fotografi, serta pengembangan web interaktif.',
+  en: 'Muhammad Maldy Rais Ramadhan, professionally known as Maldy Rais, is a Japanese language tutor, Japanese language and literature student, and visual creator working across education, design, photography, and interactive web development.',
+  ja: 'Muhammad Maldy Rais Ramadhan（Maldy Rais）は、日本語チューター、日本語・日本文学を学ぶ学生、ビジュアルクリエイターとして、教育・デザイン・写真・インタラクティブWeb開発に取り組んでいます。',
+}
+
 const ABOUT_HERO_COPY = {
   id: {
     greeting: 'Halo, saya',
@@ -250,6 +256,7 @@ export default function About() {
             </h1>
 
             <p className="about-bio about-bio-v2">{bio}</p>
+            <p className="about-entity-intro">{ABOUT_ENTITY_INTRO[language] ?? ABOUT_ENTITY_INTRO.id}</p>
 
             {roleItems.length > 0 && (
               <div className="about-role-line" aria-label="Roles">

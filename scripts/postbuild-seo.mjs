@@ -2,6 +2,8 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises'
 
 const SITE_URL = 'https://maldyrais.github.io'
 const NIHONGO_URL = `${SITE_URL}/Nihongo-gakushu/`
+const PERSON_NAME = 'Muhammad Maldy Rais Ramadhan'
+const PERSON_PUBLIC_NAME = 'Maldy Rais'
 const DEFAULT_SOCIAL_IMAGE = `${SITE_URL}/about/about-portrait.png`
 const DEFAULT_LANGUAGE = 'id'
 const LANGUAGES = ['id', 'en', 'ja']
@@ -65,42 +67,45 @@ const ROUTES = {
     type: 'website',
     id: {
       title: 'Maldy Rais — Tutor Bahasa Jepang & Kreator Visual',
-      description: 'Portfolio Maldy Rais, tutor bahasa Jepang dan kreator visual yang berkarya dalam desain, fotografi, serta pengalaman web interaktif.',
+      description: 'Portofolio resmi Muhammad Maldy Rais Ramadhan, dikenal sebagai Maldy Rais, tutor bahasa Jepang dan kreator visual dalam desain, fotografi, serta web interaktif.',
       heading: 'Maldy Rais',
-      summary: 'Tutor bahasa Jepang dan kreator visual yang berkarya dalam desain, fotografi, dan pengalaman web interaktif.',
+      summary: 'Portofolio resmi Muhammad Maldy Rais Ramadhan, dikenal sebagai Maldy Rais, tutor bahasa Jepang dan kreator visual dalam desain, fotografi, serta web interaktif.',
     },
     en: {
       title: 'Maldy Rais — Japanese Tutor & Visual Creator',
-      description: 'Portfolio of Maldy Rais, a Japanese language tutor and visual creator working across design, photography, and interactive web experiences.',
+      description: 'Official portfolio of Muhammad Maldy Rais Ramadhan, professionally known as Maldy Rais, a Japanese language tutor and visual creator.',
       heading: 'Maldy Rais',
-      summary: 'A Japanese language tutor and visual creator working across design, photography, and interactive web experiences.',
+      summary: 'Official portfolio of Muhammad Maldy Rais Ramadhan, professionally known as Maldy Rais, a Japanese language tutor and visual creator.',
     },
     ja: {
       title: 'Maldy Rais — 日本語チューター・ビジュアルクリエイター',
-      description: '日本語教育、デザイン、写真、インタラクティブWeb制作に取り組むMaldy Raisのポートフォリオ。',
+      description: 'Muhammad Maldy Rais Ramadhan（Maldy Rais）の公式ポートフォリオ。日本語教育、デザイン、写真、インタラクティブWeb制作に取り組んでいます。',
       heading: 'Maldy Rais',
-      summary: '日本語教育、デザイン、写真、インタラクティブWeb制作に取り組むポートフォリオです。',
+      summary: 'Muhammad Maldy Rais Ramadhan（Maldy Rais）の公式ポートフォリオです。',
     },
   },
   '/about': {
     type: 'profile',
     id: {
-      title: 'Tentang Maldy Rais — Tutor Bahasa Jepang & Kreator Visual',
-      description: 'Kenali Maldy Rais lebih jauh: perjalanan, pengalaman, minat, dan karya di bidang bahasa Jepang, desain, fotografi, serta web interaktif.',
+      title: 'Muhammad Maldy Rais Ramadhan (Maldy Rais) — Tentang Saya',
+      description: 'Muhammad Maldy Rais Ramadhan, dikenal secara profesional sebagai Maldy Rais, adalah tutor bahasa Jepang, mahasiswa Sastra Jepang, dan kreator visual.',
       heading: 'Tentang Maldy Rais',
       summary: 'Profil, perjalanan, pengalaman, minat, dan aktivitas Maldy Rais di bidang bahasa Jepang, desain, fotografi, serta web interaktif.',
+      identityIntro: 'Muhammad Maldy Rais Ramadhan, dikenal secara profesional sebagai Maldy Rais, adalah tutor bahasa Jepang, mahasiswa Sastra Jepang, dan kreator visual yang berkarya di bidang pendidikan, desain, fotografi, serta pengembangan web interaktif.',
     },
     en: {
-      title: 'About Maldy Rais — Japanese Tutor & Visual Creator',
-      description: 'Learn more about Maldy Rais, his experience, interests, and work across Japanese language education, design, photography, and interactive web.',
+      title: 'About Muhammad Maldy Rais Ramadhan (Maldy Rais)',
+      description: 'Muhammad Maldy Rais Ramadhan, professionally known as Maldy Rais, is a Japanese language tutor, Japanese language and literature student, and visual creator.',
       heading: 'About Maldy Rais',
       summary: 'Profile, experience, interests, and activities across Japanese language education, design, photography, and interactive web.',
+      identityIntro: 'Muhammad Maldy Rais Ramadhan, professionally known as Maldy Rais, is a Japanese language tutor, Japanese language and literature student, and visual creator working across education, design, photography, and interactive web development.',
     },
     ja: {
-      title: 'Maldy Raisについて — 日本語・デザイン・写真・Web',
-      description: 'Maldy Raisの経験、興味、活動について。日本語教育、デザイン、写真、インタラクティブWebの分野で活動しています。',
+      title: 'Muhammad Maldy Rais Ramadhan（Maldy Rais）について',
+      description: 'Muhammad Maldy Rais Ramadhan（Maldy Rais）は、日本語チューター、日本語・日本文学を学ぶ学生、ビジュアルクリエイターです。',
       heading: 'Maldy Raisについて',
       summary: '日本語教育、デザイン、写真、インタラクティブWebに関する経験、興味、活動を紹介します。',
+      identityIntro: 'Muhammad Maldy Rais Ramadhan（Maldy Rais）は、日本語チューター、日本語・日本文学を学ぶ学生、ビジュアルクリエイターとして、教育・デザイン・写真・インタラクティブWeb開発に取り組んでいます。',
     },
   },
   '/works': {
@@ -257,7 +262,8 @@ function personSchema(copy, snapshot, language) {
   const person = {
     '@type': 'Person',
     '@id': personId,
-    name: profile?.name || 'Maldy Rais',
+    name: PERSON_NAME,
+    alternateName: PERSON_PUBLIC_NAME,
     url: `${SITE_URL}/id/about/`,
     description: localized(profile, 'bio', language, copy.description),
     image: DEFAULT_SOCIAL_IMAGE,
@@ -440,6 +446,7 @@ function noScriptFallback(contentPath, copy, snapshot, language) {
       <main class="seo-fallback" aria-label="${escapeHtml(copy.heading)}">
         <h1>${escapeHtml(copy.heading)}</h1>
         <p>${escapeHtml(intro)}</p>
+        ${contentPath === '/about' && copy.identityIntro ? `<p>${escapeHtml(copy.identityIntro)}</p>` : ''}
         ${extra}
         <nav>
           <a href="${localizedPath('/', language)}">${escapeHtml(labels.home)}</a>
@@ -463,7 +470,7 @@ function injectPublicHead(html, contentPath, snapshot, language) {
   const tags = `
     <title>${escapeHtml(copy.title)}</title>
     <meta name="description" content="${escapeHtml(copy.description)}">
-    <meta name="author" content="Maldy Rais">
+    <meta name="author" content="${PERSON_NAME}">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <link rel="canonical" href="${url}">
     ${alternateMarkup(contentPath)}
@@ -576,7 +583,7 @@ function injectWorkHead(html, work, snapshot, language) {
   const tags = `
     <title>${escapeHtml(pageTitle)}</title>
     <meta name="description" content="${escapeHtml(description)}">
-    <meta name="author" content="Maldy Rais">
+    <meta name="author" content="${PERSON_NAME}">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <link rel="canonical" href="${url}">
     ${alternateMarkup(contentPath)}
@@ -696,7 +703,7 @@ function injectActivityHead(html, activity, snapshot, language) {
   const tags = `
     <title>${escapeHtml(pageTitle)}</title>
     <meta name="description" content="${escapeHtml(description)}">
-    <meta name="author" content="Maldy Rais">
+    <meta name="author" content="${PERSON_NAME}">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <link rel="canonical" href="${url}">
     ${alternateMarkup(contentPath)}
